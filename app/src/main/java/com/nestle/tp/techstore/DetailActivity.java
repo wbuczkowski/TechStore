@@ -83,21 +83,21 @@ public class DetailActivity extends AppActivity {
         data = intent.getStringExtra(EXTRA_OPTION);
         mOption = (data.isEmpty()) ? OPTION_GOODS_ISSUE : data;
         data = intent.getStringExtra(EXTRA_WORK_ORDER);
-        if (!data.isEmpty()) mWorkOrder.setText(data);
+        if (data != null) if (!data.isEmpty()) mWorkOrder.setText(data);
         data = intent.getStringExtra(EXTRA_COST_CENTER);
-        if (!data.isEmpty()) mCostCenter.setText(data);
+        if (data != null) if (!data.isEmpty()) mCostCenter.setText(data);
         data = intent.getStringExtra(EXTRA_MATERIAL);
-        if (!data.isEmpty()) mCostCenter.setText(data);
+        if (data != null) if (!data.isEmpty()) mCostCenter.setText(data);
         data = intent.getStringExtra(EXTRA_PLANT);
-        if (!data.isEmpty()) mPlant.setText(data);
+        if (data != null) if (!data.isEmpty()) mPlant.setText(data);
         data = intent.getStringExtra(EXTRA_STORAGE_LOCATION);
-        if (!data.isEmpty()) mStorageLocation.setText(data);
+        if (data != null) if (!data.isEmpty()) mStorageLocation.setText(data);
         data = intent.getStringExtra(EXTRA_BIN);
-        if (!data.isEmpty()) mBin.setText(data);
+        if (data != null) if (!data.isEmpty()) mBin.setText(data);
         data = intent.getStringExtra(EXTRA_INVENTORY);
-        if (!data.isEmpty()) mInventory.setText(data);
+        if (data != null) if (!data.isEmpty()) mInventory.setText(data);
         data = intent.getStringExtra(EXTRA_VENDOR);
-        if (!data.isEmpty()) mVendor.setText(data);
+        if (data != null) if (!data.isEmpty()) mVendor.setText(data);
         // get defaults from preferences
         SharedPreferences sharedPref = PreferenceManager.getDefaultSharedPreferences(this);
         if (mPlant.length() == 0)
