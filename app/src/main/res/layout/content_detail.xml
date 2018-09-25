@@ -9,7 +9,15 @@
     tools:context=".DetailActivity"
     tools:showIn="@layout/activity_detail">
 
+    <TextView
+        android:id="@+id/textTitle"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:textAppearance="@style/TextAppearance.AppCompat.Headline"
+        tools:text="Title" />
+
     <LinearLayout
+        android:id="@+id/layoutWorkOrder"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="horizontal">
@@ -33,6 +41,7 @@
     </LinearLayout>
 
     <LinearLayout
+        android:id="@+id/layoutCostCenter"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="horizontal">
@@ -56,6 +65,7 @@
     </LinearLayout>
 
     <LinearLayout
+        android:id="@+id/layoutInventory"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="horizontal">
@@ -80,6 +90,7 @@
     </LinearLayout>
 
     <LinearLayout
+        android:id="@+id/layoutMaterial"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="horizontal">
@@ -103,6 +114,7 @@
     </LinearLayout>
 
     <LinearLayout
+        android:id="@+id/layoutPlant"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="horizontal">
@@ -145,6 +157,7 @@
     </LinearLayout>
 
     <LinearLayout
+        android:id="@+id/layoutBin"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="horizontal">
@@ -168,6 +181,7 @@
     </LinearLayout>
 
     <LinearLayout
+        android:id="@+id/layoutVendor"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="horizontal">
@@ -191,6 +205,7 @@
     </LinearLayout>
 
     <LinearLayout
+        android:id="@+id/layoutQuantity"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="horizontal">
