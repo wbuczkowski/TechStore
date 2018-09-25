@@ -61,9 +61,15 @@ public class MainActivity extends AppActivity implements View.OnClickListener {
                     // this is a material
                     option = DetailActivity.OPTION_GOODS_ISSUE;
                     materialNumber = splitData[0];
-                    plant = splitData[1];
-                    storageLocation = splitData[2];
-                    bin = splitData[3];
+                    if (splitData.length > 1) {
+                        plant = splitData[1];
+                        if (splitData.length > 2) {
+                            storageLocation = splitData[2];
+                            if (splitData.length > 3) {
+                                bin = splitData[3];
+                            }
+                        }
+                    }
             }
         } else if (splitData[0].startsWith("E")
                 || splitData[0].startsWith("U")) {
@@ -72,9 +78,15 @@ public class MainActivity extends AppActivity implements View.OnClickListener {
             if (materialNumber.matches("\\d{9}")) {
                 // material number correct
                 option = DetailActivity.OPTION_GOODS_ISSUE;
-                plant = splitData[1];
-                storageLocation = splitData[2];
-                bin = splitData[3];
+                if (splitData.length > 1) {
+                    plant = splitData[1];
+                    if (splitData.length > 2) {
+                        storageLocation = splitData[2];
+                        if (splitData.length > 3) {
+                            bin = splitData[3];
+                        }
+                    }
+                }
             }
         } else if (splitData[0].startsWith("K")) {
             // this is a vendor consignment material
@@ -82,14 +94,22 @@ public class MainActivity extends AppActivity implements View.OnClickListener {
             if (materialNumber.matches("\\d{9}")) {
                 // material number correct
                 option = DetailActivity.OPTION_GOODS_ISSUE;
-                if (splitData[1].matches("\\d{9}")) {
-                    // this is a vendor code
-                    vendor = splitData[1];
-                } else {
-                    plant = splitData[1];
-                    storageLocation = splitData[2];
-                    vendor = splitData[3];
-                    bin = splitData[4];
+                if (splitData.length > 1) {
+                    if (splitData[1].matches("\\d{9}")) {
+                        // this is a vendor code
+                        vendor = splitData[1];
+                    } else {
+                        plant = splitData[1];
+                        if (splitData.length > 2) {
+                            storageLocation = splitData[2];
+                            if (splitData.length > 3) {
+                                vendor = splitData[3];
+                                if (splitData.length > 4) {
+                                    bin = splitData[4];
+                                }
+                            }
+                        }
+                    }
                 }
             }
         } else if (splitData[0].startsWith("C")) {

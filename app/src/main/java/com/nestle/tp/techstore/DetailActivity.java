@@ -175,30 +175,50 @@ public class DetailActivity extends AppActivity {
                     // this is a material
                     unknown = false;
                     mMaterial.setText(splitData[0]);
-                    mPlant.setText(splitData[1]);
-                    mStorageLocation.setText(splitData[2]);
-                    mBin.setText(splitData[3]);
+                    if (splitData.length > 1) {
+                        mPlant.setText(splitData[1]);
+                        if (splitData.length > 2) {
+                            mStorageLocation.setText(splitData[2]);
+                            if (splitData.length > 3) {
+                                mBin.setText(splitData[3]);
+                            }
+                        }
+                    }
             }
         } else if (splitData[0].matches("E\\d{9}")
                 || splitData[0].matches("U\\d{9}")) {
             // this is an ERSA or UNBW material
             unknown = false;
             mMaterial.setText(splitData[0].substring(1, 10));
-            mPlant.setText(splitData[1]);
-            mStorageLocation.setText(splitData[2]);
-            mBin.setText(splitData[3]);
+            if (splitData.length > 1) {
+                mPlant.setText(splitData[1]);
+                if (splitData.length > 2) {
+                    mStorageLocation.setText(splitData[2]);
+                    if (splitData.length > 3) {
+                        mBin.setText(splitData[3]);
+                    }
+                }
+            }
         } else if (splitData[0].matches("K\\d{9}")) {
             // this is a vendor consignment material
             unknown = false;
             mMaterial.setText(splitData[0].substring(1, 10));
-            if (splitData[1].matches("\\d{9}")) {
-                // this is a vendor code
-                mVendor.setText(splitData[1]);
-            } else {
-                mPlant.setText(splitData[1]);
-                mStorageLocation.setText(splitData[2]);
-                mVendor.setText(splitData[3]);
-                mBin.setText(splitData[4]);
+            if (splitData.length > 1) {
+                if (splitData[1].matches("\\d{9}")) {
+                    // this is a vendor code
+                    mVendor.setText(splitData[1]);
+                } else {
+                    mPlant.setText(splitData[1]);
+                    if (splitData.length > 2) {
+                        mStorageLocation.setText(splitData[2]);
+                        if (splitData.length > 3) {
+                            mVendor.setText(splitData[3]);
+                            if (splitData.length > 4) {
+                                mBin.setText(splitData[4]);
+                            }
+                        }
+                    }
+                }
             }
         } else if (splitData[0].startsWith("C")) {
             // this is a cost center
