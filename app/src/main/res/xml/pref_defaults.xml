@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="utf-8"?>
+<PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <EditTextPreference
+        android:key="pref_default_plant"
+        android:selectAllOnFocus="true"
+        android:singleLine="true"
+        android:title="@string/text_plant" />
+    <EditTextPreference
+        android:key="pref_default_storage_location"
+        android:selectAllOnFocus="true"
+        android:singleLine="true"
+        android:title="@string/text_storage_location" />
+    <ListPreference
+        android:defaultValue="300000"
+        android:entries="@array/pref_timeout_titles"
+        android:entryValues="@array/pref_timeout_values"
+        android:key="pref_timeout"
+        android:title="@string/pref_timeout_title" />
+</PreferenceScreen>

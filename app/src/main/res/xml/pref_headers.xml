@@ -1,0 +1,15 @@
+<preference-headers xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <!-- These settings headers are only used on tablets. -->
+
+    <header
+        android:fragment="com.nestle.tp.techstore.SettingsActivity$ScannerPreferenceFragment"
+        android:icon="@drawable/ic_supermarket_barcode"
+        android:title="@string/pref_header_scanner" />
+
+    <header
+        android:fragment="com.nestle.tp.techstore.SettingsActivity$DefaultsPreferenceFragment"
+        android:icon="@drawable/ic_info_black_24dp"
+        android:title="@string/pref_header_defaults" />
+
+</preference-headers>
