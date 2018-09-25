@@ -69,12 +69,14 @@ public class DetailActivity extends AppActivity {
         mInventory = findViewById(R.id.editInventory);
         mVendor = findViewById(R.id.editVendor);
         // load last used values first
-        mWorkOrder.setText(savedInstanceState.getString(EXTRA_WORK_ORDER, ""));
-        mCostCenter.setText(savedInstanceState.getString(EXTRA_COST_CENTER, ""));
-        mPlant.setText(savedInstanceState.getString(EXTRA_PLANT, ""));
-        mStorageLocation.setText(savedInstanceState.getString(EXTRA_STORAGE_LOCATION, ""));
-        mInventory.setText(savedInstanceState.getString(EXTRA_INVENTORY, ""));
-        mVendor.setText(savedInstanceState.getString(EXTRA_VENDOR, ""));
+        if (savedInstanceState != null) {
+            mWorkOrder.setText(savedInstanceState.getString(EXTRA_WORK_ORDER, ""));
+            mCostCenter.setText(savedInstanceState.getString(EXTRA_COST_CENTER, ""));
+            mPlant.setText(savedInstanceState.getString(EXTRA_PLANT, ""));
+            mStorageLocation.setText(savedInstanceState.getString(EXTRA_STORAGE_LOCATION, ""));
+            mInventory.setText(savedInstanceState.getString(EXTRA_INVENTORY, ""));
+            mVendor.setText(savedInstanceState.getString(EXTRA_VENDOR, ""));
+        }
         // replace with the values from intent, if provided
         Intent intent = getIntent();
         String data;
