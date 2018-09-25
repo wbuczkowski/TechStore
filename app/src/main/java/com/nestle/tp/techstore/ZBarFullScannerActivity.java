@@ -82,6 +82,7 @@ public class ZBarFullScannerActivity extends AppCompatActivity implements
         outState.putIntegerArrayList(SELECTED_FORMATS, mSelectedIndices);
         outState.putInt(CAMERA_ID, mCameraId);
     }
+
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         MenuItem menuItem;

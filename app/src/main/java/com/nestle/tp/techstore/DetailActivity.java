@@ -1,15 +1,16 @@
 package com.nestle.tp.techstore;
 
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
+import android.preference.PreferenceManager;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
 import android.support.v7.app.ActionBar;
-import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
-import android.view.View;
+import android.widget.EditText;
 
 import com.google.android.gms.common.api.CommonStatusCodes;
 
@@ -27,22 +28,25 @@ public class DetailActivity extends AppActivity {
     public static final String EXTRA_STORAGE_LOCATION = "STORAGE_LOCATION";
     public static final String EXTRA_BIN = "BIN";
     public static final String EXTRA_QUANTITY = "QUANTITY";
-    public static final String EXTRA_USERNAME = "USERNAME";
     public static final String EXTRA_DATE = "DATE";
     public static final String EXTRA_INVENTORY = "INVENTORY";
     public static final String EXTRA_VENDOR = "VENDOR";
 
+    public static final String OPTION_GOODS_ISSUE = "1";
+    public static final String OPTION_GOODS_RETURN = "2";
+    public static final String OPTION_INVENTORY_WO_DOCUMENT = "3";
+    public static final String OPTION_INVENTORY_WITH_DOCUMENT = "4";
+
     private String mOption;
-    private String mWorkOrder;
-    private String mCostCenter;
-    private String mMaterial;
-    private String mPlant;
-    private String mStorageLocation;
-    private String mBin;
-    private Double mQuantity;
-    private String mUser;
-    private String mInventory;
-    private String mVendor;
+    private EditText mWorkOrder;
+    private EditText mCostCenter;
+    private EditText mMaterial;
+    private EditText mPlant;
+    private EditText mStorageLocation;
+    private EditText mBin;
+    private EditText mQuantity;
+    private EditText mInventory;
+    private EditText mVendor;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -54,19 +58,62 @@ public class DetailActivity extends AppActivity {
         if (actionBar != null) actionBar.setDisplayHomeAsUpEnabled(true);
         FloatingActionButton fab = findViewById(R.id.fab);
         fab.setOnClickListener(fabListener);
-
+        // get edit text controls
+        mWorkOrder = findViewById(R.id.editWorkOrder);
+        mCostCenter = findViewById(R.id.editCostCenter);
+        mMaterial = findViewById(R.id.editMaterial);
+        mPlant = findViewById(R.id.editPlant);
+        mStorageLocation = findViewById(R.id.editStorageLocation);
+        mBin = findViewById(R.id.editBin);
+        mQuantity = findViewById(R.id.editQuantity);
+        mInventory = findViewById(R.id.editInventory);
+        mVendor = findViewById(R.id.editVendor);
+        // load last used values first
+        mWorkOrder.setText(savedInstanceState.getString(EXTRA_WORK_ORDER, ""));
+        mCostCenter.setText(savedInstanceState.getString(EXTRA_COST_CENTER, ""));
+        mPlant.setText(savedInstanceState.getString(EXTRA_PLANT, ""));
+        mStorageLocation.setText(savedInstanceState.getString(EXTRA_STORAGE_LOCATION, ""));
+        mInventory.setText(savedInstanceState.getString(EXTRA_INVENTORY, ""));
+        mVendor.setText(savedInstanceState.getString(EXTRA_VENDOR, ""));
+        // replace with the values from intent, if provided
         Intent intent = getIntent();
-        mOption = intent.getStringExtra(EXTRA_OPTION);
-        mWorkOrder = intent.getStringExtra(EXTRA_WORK_ORDER);
-        mCostCenter = intent.getStringExtra(EXTRA_COST_CENTER);
-        mMaterial = intent.getStringExtra(EXTRA_MATERIAL);
-        mPlant = intent.getStringExtra(EXTRA_PLANT);
-        mStorageLocation = intent.getStringExtra(EXTRA_STORAGE_LOCATION);
-        mBin = intent.getStringExtra(EXTRA_BIN);
-        mQuantity = intent.getDoubleExtra(EXTRA_QUANTITY, 0.0);
-        mUser = intent.getStringExtra(EXTRA_USERNAME);
-        mInventory = intent.getStringExtra(EXTRA_INVENTORY);
-        mVendor = intent.getStringExtra(EXTRA_VENDOR);
+        String data;
+        data = intent.getStringExtra(EXTRA_OPTION);
+        mOption = (data.isEmpty()) ? OPTION_GOODS_ISSUE : data;
+        data = intent.getStringExtra(EXTRA_WORK_ORDER);
+        if (!data.isEmpty()) mWorkOrder.setText(data);
+        data = intent.getStringExtra(EXTRA_COST_CENTER);
+        if (!data.isEmpty()) mCostCenter.setText(data);
+        data = intent.getStringExtra(EXTRA_MATERIAL);
+        if (!data.isEmpty()) mCostCenter.setText(data);
+        data = intent.getStringExtra(EXTRA_PLANT);
+        if (!data.isEmpty()) mPlant.setText(data);
+        data = intent.getStringExtra(EXTRA_STORAGE_LOCATION);
+        if (!data.isEmpty()) mStorageLocation.setText(data);
+        data = intent.getStringExtra(EXTRA_BIN);
+        if (!data.isEmpty()) mBin.setText(data);
+        data = intent.getStringExtra(EXTRA_INVENTORY);
+        if (!data.isEmpty()) mInventory.setText(data);
+        data = intent.getStringExtra(EXTRA_VENDOR);
+        if (!data.isEmpty()) mVendor.setText(data);
+        // get defaults from preferences
+        SharedPreferences sharedPref = PreferenceManager.getDefaultSharedPreferences(this);
+        if (mPlant.length() == 0)
+            mPlant.setText(sharedPref.getString("pref_default_plant", ""));
+        if (mStorageLocation.length() == 0)
+            mStorageLocation.setText(sharedPref.getString("pref_default_storage_location", ""));
+        // TODO: initialize fields labels, visibility and clear unused
+    }
+
+    @Override
+    public void onSaveInstanceState(Bundle outState) {
+        super.onSaveInstanceState(outState);
+        outState.putString(EXTRA_WORK_ORDER, mWorkOrder.getText().toString());
+        outState.putString(EXTRA_COST_CENTER, mCostCenter.getText().toString());
+        outState.putString(EXTRA_PLANT, mPlant.getText().toString());
+        outState.putString(EXTRA_STORAGE_LOCATION, mStorageLocation.getText().toString());
+        outState.putString(EXTRA_INVENTORY, mInventory.getText().toString());
+        outState.putString(EXTRA_VENDOR, mVendor.getText().toString());
     }
 
     @Override
@@ -86,18 +133,18 @@ public class DetailActivity extends AppActivity {
                 if (validateData()) {
                     Intent data = new Intent();
                     data.putExtra(EXTRA_OPTION, mOption);
-                    data.putExtra(EXTRA_WORK_ORDER, mWorkOrder);
-                    data.putExtra(EXTRA_COST_CENTER, mCostCenter);
-                    data.putExtra(EXTRA_MATERIAL, mMaterial);
-                    data.putExtra(EXTRA_PLANT, mPlant);
-                    data.putExtra(EXTRA_STORAGE_LOCATION, mStorageLocation);
-                    data.putExtra(EXTRA_BIN, mBin);
-                    data.putExtra(EXTRA_QUANTITY, mQuantity);
-                    data.putExtra(EXTRA_USERNAME, mUser);
-                    SimpleDateFormat ft = new SimpleDateFormat("DD/MM/YY HH:mm:ss", Locale.UK);
+                    data.putExtra(EXTRA_WORK_ORDER, mWorkOrder.getText().toString());
+                    data.putExtra(EXTRA_COST_CENTER, mCostCenter.getText().toString());
+                    data.putExtra(EXTRA_MATERIAL, mMaterial.getText().toString());
+                    data.putExtra(EXTRA_PLANT, mPlant.getText().toString());
+                    data.putExtra(EXTRA_STORAGE_LOCATION, mStorageLocation.getText().toString());
+                    data.putExtra(EXTRA_BIN, mBin.getText().toString());
+                    // TODO: manage format conversion for quantity as string
+                    data.putExtra(EXTRA_QUANTITY, mQuantity.getText().toString());
+                    SimpleDateFormat ft = new SimpleDateFormat("DD/MM/YY HH:mm:ss", Locale.US);
                     data.putExtra(EXTRA_DATE, ft.format(new Date()));
-                    data.putExtra(EXTRA_INVENTORY, mInventory);
-                    data.putExtra(EXTRA_VENDOR, mVendor);
+                    data.putExtra(EXTRA_INVENTORY, mInventory.getText().toString());
+                    data.putExtra(EXTRA_VENDOR, mVendor.getText().toString());
                     setResult(CommonStatusCodes.SUCCESS, data);
                     finish();
                 } else {
@@ -112,7 +159,61 @@ public class DetailActivity extends AppActivity {
 
     @Override
     public void processBarcode(String data) {
-        // TODO
+        String[] splitData = data.split(" ");
+        boolean unknown = true;
+        if (splitData[0].matches("\\d+")) {
+            // starts with a digit
+            switch (splitData[0].length()) {
+                case 10:
+                    // this is a work order
+                    unknown = false;
+                    mWorkOrder.setText(splitData[0]);
+                    break;
+                case 9:
+                    // this is a material
+                    unknown = false;
+                    mMaterial.setText(splitData[0]);
+                    mPlant.setText(splitData[1]);
+                    mStorageLocation.setText(splitData[2]);
+                    mBin.setText(splitData[3]);
+            }
+        } else if (splitData[0].matches("E\\d{9}")
+                || splitData[0].matches("U\\d{9}")) {
+            // this is an ERSA or UNBW material
+            unknown = false;
+            mMaterial.setText(splitData[0].substring(1, 10));
+            mPlant.setText(splitData[1]);
+            mStorageLocation.setText(splitData[2]);
+            mBin.setText(splitData[3]);
+        } else if (splitData[0].matches("K\\d{9}")) {
+            // this is a vendor consignment material
+            unknown = false;
+            mMaterial.setText(splitData[0].substring(1, 10));
+            if (splitData[1].matches("\\d{9}")) {
+                // this is a vendor code
+                mVendor.setText(splitData[1]);
+            } else {
+                mPlant.setText(splitData[1]);
+                mStorageLocation.setText(splitData[2]);
+                mVendor.setText(splitData[3]);
+                mBin.setText(splitData[4]);
+            }
+        } else if (splitData[0].startsWith("C")) {
+            // this is a cost center
+            unknown = false;
+            mCostCenter.setText(splitData[0].substring(1));
+        } else if (splitData[0].matches("V\\d{9}")) {
+            // this is a vendor
+            unknown = false;
+            mVendor.setText(splitData[0].substring(1));
+        } else if (splitData[0].matches("I\\d{9}")) {
+            // this is an inventory document
+            unknown = false;
+            mInventory.setText(splitData[0].substring(1));
+        }
+        if (unknown) Snackbar.make(findViewById(R.id.fab),
+                "Unknown barcode",
+                Snackbar.LENGTH_LONG).show();
     }
 
     private boolean validateData() {

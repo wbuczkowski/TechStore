@@ -214,8 +214,12 @@ public class LoginActivity extends AppActivity {
 
     @Override
     public void processBarcode(String data) {
-        if (Character.isLetter(data.charAt(0)) && Character.isLetter(data.charAt(1))) {
-            // first two characters are letters
+        if (data.matches("[a-zA-Z]{3}.*")) {
+            if (data.equals("GETMEOUT")) {
+                finishAffinity();
+                System.exit(0);
+            }
+            // first three characters are letters
             Intent intent = new Intent(this, MainActivity.class);
             intent.putExtra(Intent.EXTRA_TEXT, data);
             startActivity(intent);
