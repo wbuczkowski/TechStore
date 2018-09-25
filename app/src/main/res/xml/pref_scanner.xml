@@ -6,6 +6,7 @@
         android:entries="@array/pref_scan_technology_titles"
         android:entryValues="@array/pref_scan_technology_values"
         android:key="pref_scan_technology"
+        android:summary="Undefined"
         android:title="@string/pref_scan_technology_title" />
     <!-- NOTE: Hide buttons to simplify the UI. Users can touch outside the dialog to
          dismiss it. -->

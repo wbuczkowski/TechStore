@@ -247,7 +247,7 @@ public abstract class AppActivity extends AppCompatActivity implements LogoutTim
                                     @Override
                                     public void onClick(View view) {
                                         Intent intent;
-                                        intent = new Intent(view.getContext(),
+                                        intent = new Intent(AppActivity.this,
                                                 SettingsActivity.class);
                                         intent.putExtra(PreferenceActivity.EXTRA_SHOW_FRAGMENT,
                                                 SettingsActivity.ScannerPreferenceFragment.class.getName());
@@ -264,17 +264,17 @@ public abstract class AppActivity extends AppCompatActivity implements LogoutTim
                     break;
                 case KEY_PREF_SCAN_GOOGLEVISION:
                     // launch barcode capture activity
-                    intent = new Intent(view.getContext(), BarcodeCaptureActivity.class);
+                    intent = new Intent(AppActivity.this, BarcodeCaptureActivity.class);
                     intent.putExtra(BarcodeCaptureActivity.AutoFocus, useAutoFocus);
                     intent.putExtra(BarcodeCaptureActivity.UseFlash, useFlash);
                     startActivityForResult(intent, RC_BARCODE_CAPTURE_GOOGLE_VISION);
                     break;
                 case KEY_PREF_SCAN_ZBAR_LIB:
-                    intent = new Intent(view.getContext(), ZBarFullScannerActivity.class);
+                    intent = new Intent(AppActivity.this, ZBarFullScannerActivity.class);
                     startActivityForResult(intent, RC_BARCODE_CAPTURE_ZBAR_LIB);
                     break;
                 case KEY_PREF_SCAN_ZXING_LIB:
-                    intent = new Intent(view.getContext(), ZXingFullScannerActivity.class);
+                    intent = new Intent(AppActivity.this, ZXingFullScannerActivity.class);
                     startActivityForResult(intent, RC_BARCODE_CAPTURE_ZXING_LIB);
                     break;
                 case KEY_PREF_SCAN_NONE:

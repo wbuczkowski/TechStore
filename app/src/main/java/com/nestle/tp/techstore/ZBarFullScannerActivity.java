@@ -142,6 +142,9 @@ public class ZBarFullScannerActivity extends AppCompatActivity implements
                 DialogFragment cFragment = CameraSelectorDialogFragment.newInstance(this, mCameraId);
                 cFragment.show(getSupportFragmentManager(), "camera_selector");
                 return true;
+            case android.R.id.home:
+                onBackPressed();
+                return true;
             default:
                 return super.onOptionsItemSelected(item);
         }
