@@ -9,86 +9,208 @@
     tools:context=".DetailActivity"
     tools:showIn="@layout/activity_detail">
 
-    <EditText
-        android:id="@+id/editWorkOrder"
+    <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:ems="10"
-        android:inputType="numberDecimal"
-        android:hint="@string/text_work_order" />
+        android:orientation="horizontal">
 
-    <EditText
-        android:id="@+id/editCostCenter"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:ems="10"
-        android:inputType="textCapCharacters"
-        android:hint="@string/text_cost_center" />
+        <TextView
+            android:id="@+id/textWorkOrder"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:ems="8"
+            android:labelFor="@id/editWorkOrder"
+            android:text="@string/text_work_order" />
 
-    <EditText
-        android:id="@+id/editInventory"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:ems="10"
-        android:inputType="numberDecimal"
-        android:hint="@string/text_inventory"
-        android:visibility="visible" />
-
-    <EditText
-        android:id="@+id/editMaterial"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:ems="10"
-        android:inputType="numberDecimal"
-        android:hint="@string/text_material" />
+        <EditText
+            android:id="@+id/editWorkOrder"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="@string/text_work_order"
+            android:importantForAutofill="no"
+            android:inputType="numberDecimal"
+            tools:targetApi="o" />
+    </LinearLayout>
 
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="horizontal">
 
+        <TextView
+            android:id="@+id/textCostCenter"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:ems="8"
+            android:labelFor="@id/editCostCenter"
+            android:text="@string/text_cost_center" />
+
+        <EditText
+            android:id="@+id/editCostCenter"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="@string/text_cost_center"
+            android:importantForAutofill="no"
+            android:inputType="textCapCharacters"
+            tools:targetApi="o" />
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal">
+
+        <TextView
+            android:id="@+id/textInventory"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:ems="8"
+            android:labelFor="@id/editInventory"
+            android:text="@string/text_inventory" />
+
+        <EditText
+            android:id="@+id/editInventory"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="@string/text_inventory"
+            android:importantForAutofill="no"
+            android:inputType="numberDecimal"
+            android:visibility="visible"
+            tools:targetApi="o" />
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal">
+
+        <TextView
+            android:id="@+id/textMaterial"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:ems="8"
+            android:labelFor="@id/editMaterial"
+            android:text="@string/text_material" />
+
+        <EditText
+            android:id="@+id/editMaterial"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="@string/text_material"
+            android:importantForAutofill="no"
+            android:inputType="numberDecimal"
+            tools:targetApi="o" />
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal">
+
+        <TextView
+            android:id="@+id/textPlant"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:ems="8"
+            android:labelFor="@id/editPlant"
+            android:text="@string/text_plant" />
+
         <EditText
             android:id="@+id/editPlant"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_weight="1"
-            android:ems="10"
+            android:hint="@string/text_plant"
+            android:importantForAutofill="no"
             android:inputType="textCapCharacters"
-            android:hint="@string/text_plant" />
+            tools:targetApi="o" />
+
+        <TextView
+            android:id="@+id/textStorageLocation"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:ems="8"
+            android:labelFor="@id/editStorageLocation"
+            android:text="@string/text_storage_location" />
 
         <EditText
             android:id="@+id/editStorageLocation"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_weight="1"
-            android:ems="10"
+            android:hint="@string/text_storage_location"
+            android:importantForAutofill="no"
             android:inputType="textCapCharacters"
-            android:hint="@string/text_storage_location" />
+            tools:targetApi="o" />
     </LinearLayout>
 
-    <EditText
-        android:id="@+id/editBin"
+    <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:ems="10"
-        android:inputType="textCapCharacters"
-        android:hint="@string/text_bin" />
+        android:orientation="horizontal">
 
-    <EditText
-        android:id="@+id/editVendor"
+        <TextView
+            android:id="@+id/textBin"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:ems="8"
+            android:labelFor="@id/editBin"
+            android:text="@string/text_bin" />
+
+        <EditText
+            android:id="@+id/editBin"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="@string/text_bin"
+            android:importantForAutofill="no"
+            android:inputType="textCapCharacters"
+            tools:targetApi="o" />
+    </LinearLayout>
+
+    <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:ems="10"
-        android:inputType="numberDecimal"
-        android:hint="@string/text_vendor" />
+        android:orientation="horizontal">
 
-    <EditText
-        android:id="@+id/editQuantity"
+        <TextView
+            android:id="@+id/textVendor"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:ems="8"
+            android:labelFor="@id/editVendor"
+            android:text="@string/text_vendor" />
+
+        <EditText
+            android:id="@+id/editVendor"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="@string/text_vendor"
+            android:importantForAutofill="no"
+            android:inputType="numberDecimal"
+            tools:targetApi="o" />
+    </LinearLayout>
+
+    <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:ems="10"
-        android:hint="@string/text_quantity"
-        android:inputType="numberDecimal"
-        android:textAppearance="@style/TextAppearance.AppCompat.Large" />
+        android:orientation="horizontal">
 
+        <TextView
+            android:id="@+id/textQuantity"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:ems="8"
+            android:labelFor="@id/editQuantity"
+            android:text="@string/text_quantity" />
+
+        <EditText
+            android:id="@+id/editQuantity"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="@string/text_quantity"
+            android:importantForAutofill="no"
+            android:inputType="numberDecimal"
+            android:textAppearance="@style/TextAppearance.AppCompat.Large"
+            tools:targetApi="o" />
+    </LinearLayout>
 </LinearLayout>

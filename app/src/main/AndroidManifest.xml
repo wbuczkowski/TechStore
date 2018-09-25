@@ -53,7 +53,8 @@
             android:label="@string/title_activity_settings" />
         <activity
             android:name=".BarcodeCaptureActivity"
-            android:label="@string/title_activity_barcode_capture" />
+            android:label="@string/title_activity_barcode_capture"
+            android:theme="@style/AppTheme.NoActionBar" />
         <activity
             android:name=".DetailActivity"
             android:label="@string/title_activity_detail"
@@ -61,7 +62,7 @@
             android:theme="@style/AppTheme.NoActionBar">
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
-                android:value="com.nestle.tp.techstore.MainActivity" />
+                android:value=".MainActivity" />
         </activity>
         <activity
             android:name=".ZBarFullScannerActivity"

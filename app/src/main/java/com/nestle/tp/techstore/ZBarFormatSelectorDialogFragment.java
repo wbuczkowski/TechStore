@@ -63,7 +63,7 @@ public class ZBarFormatSelectorDialogFragment extends DialogFragment {
                                     mSelectedIndices.add(which);
                                 } else if (mSelectedIndices.contains(which)) {
                                     // Else, if the item is already in the array, remove it
-                                    mSelectedIndices.remove(mSelectedIndices.indexOf(which));
+                                    mSelectedIndices.remove(which);
                                 }
                             }
                         })

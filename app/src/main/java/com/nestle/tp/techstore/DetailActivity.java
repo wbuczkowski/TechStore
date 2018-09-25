@@ -105,6 +105,11 @@ public class DetailActivity extends AppActivity {
         if (mStorageLocation.length() == 0)
             mStorageLocation.setText(sharedPref.getString("pref_default_storage_location", ""));
         // TODO: initialize fields labels, visibility and clear unused
+        if (mOption.equals(OPTION_GOODS_ISSUE)) {
+            if (mWorkOrder.length() > 0) {
+
+            }
+        }
     }
 
     @Override

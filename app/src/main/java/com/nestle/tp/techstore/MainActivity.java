@@ -130,7 +130,6 @@ public class MainActivity extends AppActivity implements View.OnClickListener {
                     "Unknown barcode",
                     Snackbar.LENGTH_LONG).show();
         } else {
-            // TODO
             Intent intent = new Intent(this, DetailActivity.class);
             intent.putExtra(DetailActivity.EXTRA_OPTION, option);
             intent.putExtra(DetailActivity.EXTRA_WORK_ORDER, workOrder);
@@ -204,7 +203,6 @@ public class MainActivity extends AppActivity implements View.OnClickListener {
             case RC_GET_DATA:
                 // TODO
                 if (resultCode == CommonStatusCodes.SUCCESS) {
-                    // TODO
                     Snackbar.make(findViewById(R.id.fab),
                             "Success",
                             Snackbar.LENGTH_LONG).show();

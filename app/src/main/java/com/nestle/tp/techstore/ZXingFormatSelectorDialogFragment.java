@@ -28,9 +28,9 @@ public class ZXingFormatSelectorDialogFragment extends DialogFragment {
     public static ZXingFormatSelectorDialogFragment newInstance(FormatSelectorDialogListener listener, ArrayList<Integer> selectedIndices) {
         ZXingFormatSelectorDialogFragment fragment = new ZXingFormatSelectorDialogFragment();
         if(selectedIndices == null) {
-            selectedIndices = new ArrayList<Integer>();
+            selectedIndices = new ArrayList<>();
         }
-        fragment.mSelectedIndices = new ArrayList<Integer>(selectedIndices);
+        fragment.mSelectedIndices = new ArrayList<>(selectedIndices);
         fragment.mListener = listener;
         return fragment;
     }
@@ -47,11 +47,7 @@ public class ZXingFormatSelectorDialogFragment extends DialogFragment {
         int i = 0;
         for(BarcodeFormat format : ZXingScannerView.ALL_FORMATS) {
             formats[i] = format.toString();
-            if(mSelectedIndices.contains(i)) {
-                checkedIndices[i] = true;
-            } else {
-                checkedIndices[i] = false;
-            }
+            checkedIndices[i] = mSelectedIndices.contains(i);
             i++;
         }
 
@@ -69,7 +65,7 @@ public class ZXingFormatSelectorDialogFragment extends DialogFragment {
                                     mSelectedIndices.add(which);
                                 } else if (mSelectedIndices.contains(which)) {
                                     // Else, if the item is already in the array, remove it
-                                    mSelectedIndices.remove(mSelectedIndices.indexOf(which));
+                                    mSelectedIndices.remove(which);
                                 }
                             }
                         })

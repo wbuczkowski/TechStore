@@ -17,7 +17,6 @@ import android.view.View;
 
 import com.google.android.gms.common.api.CommonStatusCodes;
 import com.google.android.gms.vision.barcode.Barcode;
-
 import com.google.zxing.integration.android.IntentIntegrator;
 import com.google.zxing.integration.android.IntentResult;
 
@@ -209,9 +208,6 @@ public abstract class AppActivity extends AppCompatActivity implements LogoutTim
                                 IntentIntegrator.parseActivityResult(requestCode, resultCode, intent);
                         if (scanningResult != null) {
                             //we have a result
-//                            Snackbar.make(findViewById(R.id.fab),
-//                                    R.string.barcode_success + "\n" + scanningResult.getContents(),
-//                                    Snackbar.LENGTH_LONG).show();
                             processBarcode(scanningResult.getContents());
                         } else {
                             Snackbar.make(findViewById(R.id.fab), R.string.barcode_failure,
@@ -237,7 +233,6 @@ public abstract class AppActivity extends AppCompatActivity implements LogoutTim
         public void onClick(View view) {
             Intent intent;
             switch (scanTech) {
-                //if (useDataWedge) {
                 case KEY_PREF_SCAN_DATAWEDGE:
                     // start DataWedge soft-scanning
                     intent = new Intent();
@@ -267,7 +262,6 @@ public abstract class AppActivity extends AppCompatActivity implements LogoutTim
                     IntentIntegrator scanIntegrator = new IntentIntegrator(AppActivity.this);
                     scanIntegrator.initiateScan();
                     break;
-                //} else if (useCamera) {
                 case KEY_PREF_SCAN_GOOGLEVISION:
                     // launch barcode capture activity
                     intent = new Intent(view.getContext(), BarcodeCaptureActivity.class);
@@ -280,12 +274,10 @@ public abstract class AppActivity extends AppCompatActivity implements LogoutTim
                     startActivityForResult(intent, RC_BARCODE_CAPTURE_ZBAR_LIB);
                     break;
                 case KEY_PREF_SCAN_ZXING_LIB:
-                    // TODO: set correct class
-                    intent = new Intent(view.getContext(), ZBarFullScannerActivity.class);
+                    intent = new Intent(view.getContext(), ZXingFullScannerActivity.class);
                     startActivityForResult(intent, RC_BARCODE_CAPTURE_ZXING_LIB);
                     break;
                 case KEY_PREF_SCAN_NONE:
-                    //} else{
                     Snackbar.make(view, "Please select scanning technology", Snackbar.LENGTH_LONG)
                             .setAction(R.string.action_settings, new View.OnClickListener() {
                                 @Override
