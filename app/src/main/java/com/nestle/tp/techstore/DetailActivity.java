@@ -143,7 +143,7 @@ public class DetailActivity extends AppActivity {
                     data.putExtra(EXTRA_BIN, mBin.getText().toString());
                     // TODO: manage format conversion for quantity as string
                     data.putExtra(EXTRA_QUANTITY, mQuantity.getText().toString());
-                    SimpleDateFormat ft = new SimpleDateFormat("DD/MM/YY HH:mm:ss", Locale.US);
+                    SimpleDateFormat ft = new SimpleDateFormat("dd/MM/yy HH:mm:ss", Locale.US);
                     data.putExtra(EXTRA_DATE, ft.format(new Date()));
                     data.putExtra(EXTRA_INVENTORY, mInventory.getText().toString());
                     data.putExtra(EXTRA_VENDOR, mVendor.getText().toString());
