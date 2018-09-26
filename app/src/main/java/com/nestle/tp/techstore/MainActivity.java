@@ -2,6 +2,8 @@ package com.nestle.tp.techstore;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.os.Environment;
+import android.support.annotation.Nullable;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
 import android.support.v7.app.ActionBar;
@@ -12,6 +14,14 @@ import android.widget.Button;
 import android.widget.TextView;
 
 import com.google.android.gms.common.api.CommonStatusCodes;
+
+import java.io.BufferedInputStream;
+import java.io.BufferedWriter;
+import java.io.File;
+import java.io.FileInputStream;
+import java.io.FileWriter;
+import java.io.IOException;
+import java.util.HashMap;
 
 public class MainActivity extends AppActivity implements View.OnClickListener {
 
@@ -38,8 +48,9 @@ public class MainActivity extends AppActivity implements View.OnClickListener {
         button.setOnClickListener(this);
         button = findViewById(R.id.button_display);
         button.setOnClickListener(this);
-        mStatus = findViewById(R.id.text_status);
         mUserName = getIntent().getStringExtra(Intent.EXTRA_TEXT);
+        mStatus = findViewById(R.id.text_status);
+        setStatusText();
     }
 
     @Override
@@ -201,19 +212,225 @@ public class MainActivity extends AppActivity implements View.OnClickListener {
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         switch (requestCode) {
             case RC_GET_DATA:
-                // TODO
                 if (resultCode == CommonStatusCodes.SUCCESS) {
                     Snackbar.make(findViewById(R.id.fab),
                             "Success",
                             Snackbar.LENGTH_LONG).show();
+                    if (writeFile(data)) setStatusText();
                 } else {
                     Snackbar.make(findViewById(R.id.fab),
-                            "Something else",
+                            "Cancelled",
                             Snackbar.LENGTH_LONG).show();
                 }
                 break;
             default:
                 super.onActivityResult(requestCode, resultCode, data);
+        }
+    }
+
+    private boolean writeFile(Intent intent) {
+        String state = Environment.getExternalStorageState();
+        if (Environment.MEDIA_MOUNTED.equals(state)) {
+            File file = new File(Environment.getExternalStoragePublicDirectory(
+                    Environment.DIRECTORY_DOCUMENTS), getString(R.string.app_name));
+            if (!file.mkdirs()) {
+                Snackbar.make(findViewById(R.id.fab), "Directory not created", Snackbar.LENGTH_LONG).show();
+                return false;
+            }
+            if (!file.exists()) {
+                try {
+                    if (!file.createNewFile()) {
+                        Snackbar.make(findViewById(R.id.fab), "Cannot create file", Snackbar.LENGTH_LONG).show();
+                        return false;
+                    }
+                } catch (IOException e) {
+                    Snackbar.make(findViewById(R.id.fab), e.getMessage(), Snackbar.LENGTH_LONG).show();
+                    return false;
+                }
+            }
+            BufferedWriter bw = null;
+            FileWriter fw = null;
+
+            String dataLine = prepareData(intent);
+
+            try {
+                fw = new FileWriter(file, true);
+                bw = new BufferedWriter(fw);
+                if (dataLine != null) bw.write(dataLine);
+                return true;
+            } catch (IOException e) {
+                Snackbar.make(findViewById(R.id.fab), e.getMessage(), Snackbar.LENGTH_LONG).show();
+                return false;
+            } finally {
+                try {
+                    if (bw != null) bw.close();
+                    if (fw != null) fw.close();
+                } catch (IOException e) {
+                    Snackbar.make(findViewById(R.id.fab), e.getMessage(), Snackbar.LENGTH_LONG).show();
+                }
+            }
+        } else {
+            Snackbar.make(findViewById(R.id.fab), "External storage not writable", Snackbar.LENGTH_LONG).show();
+            return false;
+        }
+    }
+
+    @Nullable
+    private String prepareData(Intent intent) {
+        String data = intent.getStringExtra(DetailActivity.EXTRA_OPTION);
+        if (data == null || data.isEmpty()) {
+            // wrong intent?
+            return null;
+        }
+        // write option
+        String dataLine = data;
+
+        switch (data) {
+            case DetailActivity.OPTION_GOODS_ISSUE:
+            case DetailActivity.OPTION_GOODS_RETURN:
+                data = intent.getStringExtra(DetailActivity.EXTRA_WORK_ORDER);
+                if (data != null && !data.isEmpty()) {
+                    // write work order
+                    dataLine = dataLine.concat("\t" + data);
+                } else {
+                    // no work order, take cost center
+                    data = intent.getStringExtra(DetailActivity.EXTRA_COST_CENTER);
+                    if (data != null && !data.isEmpty()) {
+                        // write cost center
+                        dataLine = dataLine.concat("\t" + data);
+                    } else {
+                        // no work order and no cost center
+                        return null;
+                    }
+                }
+                break;
+            case DetailActivity.OPTION_INVENTORY_WO_DOCUMENT:
+            case DetailActivity.OPTION_INVENTORY_WITH_DOCUMENT:
+                // write spacer
+                dataLine = dataLine.concat("\t");
+                break;
+            default:
+                // unknown option
+                return null;
+        }
+
+        // write material number etc.
+        HashMap<String, Boolean> map = new HashMap<>();
+        map.put(DetailActivity.EXTRA_MATERIAL, true);
+        map.put(DetailActivity.EXTRA_PLANT, true);
+        map.put(DetailActivity.EXTRA_STORAGE_LOCATION, true);
+        map.put(DetailActivity.EXTRA_BIN, false);
+        map.put(DetailActivity.EXTRA_QUANTITY, true);
+        for (String key : map.keySet()) {
+            data = intent.getStringExtra(key);
+            if (data != null && !data.isEmpty()) { // write data
+                dataLine = dataLine.concat("\t" + data);
+            } else { // no data, quit if mandatory
+                Boolean b = map.get(key);
+                if (b != null && b) { // mandatory: quit
+                    return null;
+                } else { // not mandatory: write spacer
+                    dataLine = dataLine.concat("\t");
+                }
+            }
+        }
+
+        // write user name
+        dataLine = dataLine.concat("\t" + mUserName);
+
+        //write date
+        data = intent.getStringExtra(DetailActivity.EXTRA_DATE);
+        if (data != null && !data.isEmpty()) { // write data
+            dataLine = dataLine.concat("\t" + data);
+        } else {
+            return null;
+        }
+
+        // write inventory number, if provided
+        if (data.equals(DetailActivity.OPTION_INVENTORY_WITH_DOCUMENT)) {
+            // write inventory document
+            data = intent.getStringExtra(DetailActivity.EXTRA_INVENTORY);
+            if (data != null && !data.isEmpty()) { // write data
+                dataLine = dataLine.concat("\t" + data);
+            } else {
+                return null;
+            }
+        } else {
+            // write spacer
+            // TODO: check if needed
+            dataLine = dataLine.concat("\t");
+        }
+        // write vendor
+        data = intent.getStringExtra(DetailActivity.EXTRA_VENDOR);
+        if (data != null && !data.isEmpty()) {
+            // write vendor
+            dataLine = dataLine.concat("\t" + data);
+        }
+
+        // success: write end of line
+        dataLine = dataLine.concat("\n");
+
+        return dataLine;
+    }
+
+    private void setStatusText() {
+        String state = Environment.getExternalStorageState();
+        String statusText = getString(R.string.text_status);
+        if (Environment.MEDIA_MOUNTED.equals(state)) {
+            File file = new File(Environment.getExternalStoragePublicDirectory(
+                    Environment.DIRECTORY_DOCUMENTS), getString(R.string.app_name));
+            FileInputStream fis = null;
+            BufferedInputStream bis = null;
+            int count = 0;
+            try {
+                fis = new FileInputStream(file);
+                bis = new BufferedInputStream(fis);
+
+                byte[] c = new byte[1024];
+
+                int readChars = bis.read(c);
+                if (readChars == -1) {
+                    // bail out if nothing to read
+                    statusText = statusText.concat("0");
+                    mStatus.setText(statusText);
+                    return;
+                }
+
+                // make it easy for the optimizer to tune this loop
+                while (readChars == 1024) {
+                    for (int i = 0; i < 1024; ) {
+                        if (c[i++] == '\n') {
+                            ++count;
+                        }
+                    }
+                    readChars = bis.read(c);
+                }
+
+                // count remaining characters
+                while (readChars != -1) {
+                    System.out.println(readChars);
+                    for (int i = 0; i < readChars; ++i) {
+                        if (c[i] == '\n') {
+                            ++count;
+                        }
+                    }
+                    readChars = bis.read(c);
+                }
+            } catch (IOException e) {
+                Snackbar.make(findViewById(R.id.fab), e.getMessage(), Snackbar.LENGTH_LONG).show();
+                statusText = statusText.concat("0");
+                mStatus.setText(statusText);
+                return;
+            } finally {
+                try {
+                    if (bis != null) bis.close();
+                    if (fis != null) fis.close();
+                } catch (IOException e) {
+                    Snackbar.make(findViewById(R.id.fab), e.getMessage(), Snackbar.LENGTH_LONG).show();
+                }
+            }
+            statusText = statusText.concat(String.valueOf(count));
+            mStatus.setText(statusText);
         }
     }
 }

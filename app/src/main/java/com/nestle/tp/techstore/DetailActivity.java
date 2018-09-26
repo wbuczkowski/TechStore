@@ -77,12 +77,24 @@ public class DetailActivity extends AppActivity {
         if (savedInstanceState != null) {
             mWorkOrder.setText(savedInstanceState.getString(EXTRA_WORK_ORDER, ""));
             mCostCenter.setText(savedInstanceState.getString(EXTRA_COST_CENTER, ""));
-            //mPlant.setText(savedInstanceState.getString(EXTRA_PLANT, ""));
-            //mStorageLocation.setText(savedInstanceState.getString(EXTRA_STORAGE_LOCATION, ""));
+            mPlant.setText(savedInstanceState.getString(EXTRA_PLANT, ""));
+            mStorageLocation.setText(savedInstanceState.getString(EXTRA_STORAGE_LOCATION, ""));
             mInventory.setText(savedInstanceState.getString(EXTRA_INVENTORY, ""));
             mVendor.setText(savedInstanceState.getString(EXTRA_VENDOR, ""));
         }
         // replace with the values from intent, if provided
+        receiveData();
+        // get defaults from preferences
+        getPrefDefaults();
+        // initialize visibility and edibility
+        initializeVisibility();
+        // TODO: data validation
+        // TODO: while disabling, differentiate between scanned/passed/default and restored values
+        // TODO: switch from 3 to 4 on manual inventory number entry
+        // TODO: switch from 1 to 2 and from 2 to 1 on menu
+    }
+
+    private void receiveData() {
         Intent intent = getIntent();
         String data;
         data = intent.getStringExtra(EXTRA_OPTION);
@@ -103,13 +115,9 @@ public class DetailActivity extends AppActivity {
         if (data != null) if (!data.isEmpty()) mInventory.setText(data);
         data = intent.getStringExtra(EXTRA_VENDOR);
         if (data != null) if (!data.isEmpty()) mVendor.setText(data);
-        // get defaults from preferences
-        SharedPreferences sharedPref = PreferenceManager.getDefaultSharedPreferences(this);
-        if (mPlant.length() == 0)
-            mPlant.setText(sharedPref.getString("pref_default_plant", ""));
-        if (mStorageLocation.length() == 0)
-            mStorageLocation.setText(sharedPref.getString("pref_default_storage_location", ""));
-        // initialize visibility and edibility
+    }
+
+    private void initializeVisibility() {
         ViewGroup viewGroup;
         switch (mOption) {
             case OPTION_GOODS_ISSUE:
@@ -205,13 +213,21 @@ public class DetailActivity extends AppActivity {
         }
     }
 
+    private void getPrefDefaults() {
+        SharedPreferences sharedPref = PreferenceManager.getDefaultSharedPreferences(this);
+        if (mPlant.length() == 0)
+            mPlant.setText(sharedPref.getString("pref_default_plant", ""));
+        if (mStorageLocation.length() == 0)
+            mStorageLocation.setText(sharedPref.getString("pref_default_storage_location", ""));
+    }
+
     @Override
     public void onSaveInstanceState(Bundle outState) {
         super.onSaveInstanceState(outState);
         outState.putString(EXTRA_WORK_ORDER, mWorkOrder.getText().toString());
         outState.putString(EXTRA_COST_CENTER, mCostCenter.getText().toString());
-        //outState.putString(EXTRA_PLANT, mPlant.getText().toString());
-        //outState.putString(EXTRA_STORAGE_LOCATION, mStorageLocation.getText().toString());
+        outState.putString(EXTRA_PLANT, mPlant.getText().toString());
+        outState.putString(EXTRA_STORAGE_LOCATION, mStorageLocation.getText().toString());
         outState.putString(EXTRA_INVENTORY, mInventory.getText().toString());
         outState.putString(EXTRA_VENDOR, mVendor.getText().toString());
     }
@@ -382,7 +398,11 @@ public class DetailActivity extends AppActivity {
         } else if (splitData[0].matches("I\\d{9}")) {
             // this is an inventory document
             unknown = false;
-            if (mOption.equals(OPTION_INVENTORY_WO_DOCUMENT) || mOption.equals(OPTION_INVENTORY_WITH_DOCUMENT)) {
+            if (mOption.equals(OPTION_INVENTORY_WO_DOCUMENT)) {
+                // switch option from 3 to 4
+                mOption = OPTION_INVENTORY_WITH_DOCUMENT;
+            }
+            if (mOption.equals(OPTION_INVENTORY_WITH_DOCUMENT)) {
                 // ignore inventory number at goods issue
                 mInventory.setText(splitData[0].substring(1));
                 mInventory.setEnabled(false);
@@ -394,7 +414,7 @@ public class DetailActivity extends AppActivity {
     }
 
     private boolean validateData() {
-        // TODO
+        // TODO: validate data before returning
         return true;
     }
 }
