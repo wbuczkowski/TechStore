@@ -18,6 +18,7 @@ import android.preference.RingtonePreference;
 import android.support.v7.app.ActionBar;
 import android.text.TextUtils;
 import android.view.MenuItem;
+import android.widget.Toast;
 
 import java.util.List;
 
@@ -79,6 +80,17 @@ public class SettingsActivity extends AppCompatPreferenceActivity {
                 }
 
             } else {
+                // validate plant and storage location values
+                switch (preference.getKey()) {
+                    case "pref_default_plant":
+                    case "pref_default_storage_location":
+                        if (stringValue.length() != 4) {
+                            Toast.makeText(preference.getContext(),
+                                    "Length should be 4 characters",
+                                    Toast.LENGTH_SHORT).show();
+                            return false;
+                        }
+                }
                 // For all other preferences, set the summary to the value's
                 // simple string representation.
                 preference.setSummary(stringValue);
@@ -122,7 +134,6 @@ public class SettingsActivity extends AppCompatPreferenceActivity {
         super.onCreate(savedInstanceState);
         ActionBar actionBar = getSupportActionBar();
         if (actionBar != null) actionBar.setDisplayHomeAsUpEnabled(true);
-        // TODO: validate entered plant / storage location values
     }
 
     /**
