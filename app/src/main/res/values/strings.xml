@@ -44,7 +44,7 @@
     <string name="text_cost_center">Cost Center</string>
     <string name="text_material">Material</string>
     <string name="text_plant">Plant</string>
-    <string name="text_storage_location">Storage Location</string>
+    <string name="text_storage_location">S.Loc.</string>
     <string name="text_bin">Storage Bin</string>
     <string name="text_inventory">Inventory Document</string>
     <string name="text_vendor">Vendor</string>
@@ -73,7 +73,9 @@
     <string name="activity_goods_return">Goods Return</string>
     <string name="activity_inventory">Inventory</string>
     <string name="activity_display">Display Results</string>
-    <string name="text_status">Records:\\t</string>
+    <string name="text_status">Records:\t</string>
+    <string name="file_name">scandata.txt</string>
+    <string name="pref_not_selected">Not selected</string>
     <string-array name="pref_timeout_values">
         <item>60000</item>
         <item>120000</item>

@@ -7,7 +7,6 @@ import android.support.annotation.Nullable;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
 import android.support.v7.app.ActionBar;
-import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.View;
 import android.widget.Button;
@@ -21,7 +20,6 @@ import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileWriter;
 import java.io.IOException;
-import java.util.HashMap;
 
 public class MainActivity extends AppActivity implements View.OnClickListener {
 
@@ -34,8 +32,8 @@ public class MainActivity extends AppActivity implements View.OnClickListener {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-        Toolbar toolbar = findViewById(R.id.toolbar);
-        setSupportActionBar(toolbar);
+//        Toolbar toolbar = findViewById(R.id.toolbar);
+//        setSupportActionBar(toolbar);
         ActionBar actionBar = getSupportActionBar();
         if (actionBar != null) actionBar.setDisplayHomeAsUpEnabled(true);
         FloatingActionButton fab = findViewById(R.id.fab);
@@ -231,12 +229,14 @@ public class MainActivity extends AppActivity implements View.OnClickListener {
     private boolean writeFile(Intent intent) {
         String state = Environment.getExternalStorageState();
         if (Environment.MEDIA_MOUNTED.equals(state)) {
+            // TODO: API < 19
             File file = new File(Environment.getExternalStoragePublicDirectory(
                     Environment.DIRECTORY_DOCUMENTS), getString(R.string.app_name));
-            if (!file.mkdirs()) {
+            if (!file.exists() && !file.mkdirs()) {
                 Snackbar.make(findViewById(R.id.fab), "Directory not created", Snackbar.LENGTH_LONG).show();
                 return false;
             }
+            file = new File(file.getPath() + "/" + getString(R.string.file_name));
             if (!file.exists()) {
                 try {
                     if (!file.createNewFile()) {
@@ -315,25 +315,45 @@ public class MainActivity extends AppActivity implements View.OnClickListener {
         }
 
         // write material number etc.
-        HashMap<String, Boolean> map = new HashMap<>();
-        map.put(DetailActivity.EXTRA_MATERIAL, true);
-        map.put(DetailActivity.EXTRA_PLANT, true);
-        map.put(DetailActivity.EXTRA_STORAGE_LOCATION, true);
-        map.put(DetailActivity.EXTRA_BIN, false);
-        map.put(DetailActivity.EXTRA_QUANTITY, true);
-        for (String key : map.keySet()) {
-            data = intent.getStringExtra(key);
+        String[][] ii = {
+                {DetailActivity.EXTRA_MATERIAL, "true"},
+                {DetailActivity.EXTRA_PLANT, "true"},
+                {DetailActivity.EXTRA_STORAGE_LOCATION, "true"},
+                {DetailActivity.EXTRA_BIN, "false"},
+                {DetailActivity.EXTRA_QUANTITY, "true"}
+        };
+        // for (int i = 0; i<map.length;i++){
+        for (String[] i : ii) {
+            data = intent.getStringExtra(i[0]);
             if (data != null && !data.isEmpty()) { // write data
                 dataLine = dataLine.concat("\t" + data);
             } else { // no data, quit if mandatory
-                Boolean b = map.get(key);
-                if (b != null && b) { // mandatory: quit
+                if (Boolean.parseBoolean(i[1])) { // mandatory: quit
                     return null;
                 } else { // not mandatory: write spacer
                     dataLine = dataLine.concat("\t");
                 }
             }
         }
+//        HashMap<String, Boolean> map = new HashMap<>();
+//        map.put(DetailActivity.EXTRA_MATERIAL, true);
+//        map.put(DetailActivity.EXTRA_PLANT, true);
+//        map.put(DetailActivity.EXTRA_STORAGE_LOCATION, true);
+//        map.put(DetailActivity.EXTRA_BIN, false);
+//        map.put(DetailActivity.EXTRA_QUANTITY, true);
+//        for (String key : map.keySet()) {
+//            data = intent.getStringExtra(key);
+//            if (data != null && !data.isEmpty()) { // write data
+//                dataLine = dataLine.concat("\t" + data);
+//            } else { // no data, quit if mandatory
+//                Boolean b = map.get(key);
+//                if (b != null && b) { // mandatory: quit
+//                    return null;
+//                } else { // not mandatory: write spacer
+//                    dataLine = dataLine.concat("\t");
+//                }
+//            }
+//        }
 
         // write user name
         dataLine = dataLine.concat("\t" + mUserName);
@@ -377,8 +397,10 @@ public class MainActivity extends AppActivity implements View.OnClickListener {
         String state = Environment.getExternalStorageState();
         String statusText = getString(R.string.text_status);
         if (Environment.MEDIA_MOUNTED.equals(state)) {
+            // TODO: API < 19
             File file = new File(Environment.getExternalStoragePublicDirectory(
-                    Environment.DIRECTORY_DOCUMENTS), getString(R.string.app_name));
+                    Environment.DIRECTORY_DOCUMENTS), getString(R.string.app_name)
+                    + "/" + getString(R.string.file_name));
             FileInputStream fis = null;
             BufferedInputStream bis = null;
             int count = 0;

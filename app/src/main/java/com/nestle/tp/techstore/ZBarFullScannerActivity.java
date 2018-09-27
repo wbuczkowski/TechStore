@@ -6,7 +6,6 @@ import android.support.v4.app.DialogFragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
-import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.ViewGroup;
@@ -48,8 +47,8 @@ public class ZBarFullScannerActivity extends AppCompatActivity implements
             mCameraId = -1;
         }
         setContentView(R.layout.activity_zbar);
-        Toolbar toolbar = findViewById(R.id.toolbar);
-        setSupportActionBar(toolbar);
+//        Toolbar toolbar = findViewById(R.id.toolbar);
+//        setSupportActionBar(toolbar);
         ActionBar actionBar = getSupportActionBar();
         if (actionBar != null) actionBar.setDisplayHomeAsUpEnabled(true);
         ViewGroup contentFrame = findViewById(R.id.content_frame);
@@ -157,6 +156,7 @@ public class ZBarFullScannerActivity extends AppCompatActivity implements
         data.putExtra("Format", rawResult.getBarcodeFormat().getName());
         setResult(CommonStatusCodes.SUCCESS, data);
         finish();
+        // TODO check if instant is saved
     }
 
     @Override

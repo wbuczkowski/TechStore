@@ -7,7 +7,6 @@ import android.preference.PreferenceManager;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
 import android.support.v7.app.ActionBar;
-import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -56,8 +55,8 @@ public class DetailActivity extends AppActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_detail);
-        Toolbar toolbar = findViewById(R.id.toolbar);
-        setSupportActionBar(toolbar);
+//        Toolbar toolbar = findViewById(R.id.toolbar);
+//        setSupportActionBar(toolbar);
         ActionBar actionBar = getSupportActionBar();
         if (actionBar != null) actionBar.setDisplayHomeAsUpEnabled(true);
         FloatingActionButton fab = findViewById(R.id.fab);
@@ -236,6 +235,15 @@ public class DetailActivity extends AppActivity {
     public boolean onCreateOptionsMenu(Menu menu) {
         // Inflate the menu; this adds items to the action bar if it is present.
         getMenuInflater().inflate(R.menu.menu_detail, menu);
+//        if (Build.VERSION.SDK_INT < Build.VERSION_CODES.O) {
+//            // re-color the save icon
+//            MenuItem menuItem = menu.findItem(R.id.action_save);
+//            Drawable icon = menuItem.getIcon().mutate();
+//            icon = DrawableCompat.wrap(icon);
+//            DrawableCompat.setTint(icon, getResources().getColor(android.R.color.white));
+//            DrawableCompat.setTintMode(icon, PorterDuff.Mode.SRC_IN);
+//            menuItem.setIcon(icon);
+//        }
         return true;
     }
 
@@ -262,6 +270,7 @@ public class DetailActivity extends AppActivity {
                     data.putExtra(EXTRA_INVENTORY, mInventory.getText().toString());
                     data.putExtra(EXTRA_VENDOR, mVendor.getText().toString());
                     setResult(CommonStatusCodes.SUCCESS, data);
+                    // TODO: why instant is not saved?
                     finish();
                 } else {
                     Snackbar.make(findViewById(R.id.fab),

@@ -34,7 +34,6 @@
             android:id="@+id/editWorkOrder"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:hint="@string/text_work_order"
             android:importantForAutofill="no"
             android:inputType="numberDecimal"
             tools:targetApi="o" />
@@ -58,7 +57,6 @@
             android:id="@+id/editCostCenter"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:hint="@string/text_cost_center"
             android:importantForAutofill="no"
             android:inputType="textCapCharacters"
             tools:targetApi="o" />
@@ -82,7 +80,6 @@
             android:id="@+id/editInventory"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:hint="@string/text_inventory"
             android:importantForAutofill="no"
             android:inputType="numberDecimal"
             android:visibility="visible"
@@ -107,7 +104,6 @@
             android:id="@+id/editMaterial"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:hint="@string/text_material"
             android:importantForAutofill="no"
             android:inputType="numberDecimal"
             tools:targetApi="o" />
@@ -123,7 +119,7 @@
             android:id="@+id/textPlant"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:ems="8"
+            android:ems="4"
             android:labelFor="@id/editPlant"
             android:text="@string/text_plant" />
 
@@ -132,7 +128,6 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_weight="1"
-            android:hint="@string/text_plant"
             android:importantForAutofill="no"
             android:inputType="textCapCharacters"
             tools:targetApi="o" />
@@ -141,7 +136,7 @@
             android:id="@+id/textStorageLocation"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:ems="8"
+            android:ems="4"
             android:labelFor="@id/editStorageLocation"
             android:text="@string/text_storage_location" />
 
@@ -150,7 +145,6 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_weight="1"
-            android:hint="@string/text_storage_location"
             android:importantForAutofill="no"
             android:inputType="textCapCharacters"
             tools:targetApi="o" />
@@ -174,7 +168,6 @@
             android:id="@+id/editBin"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:hint="@string/text_bin"
             android:importantForAutofill="no"
             android:inputType="textCapCharacters"
             tools:targetApi="o" />
@@ -198,7 +191,6 @@
             android:id="@+id/editVendor"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:hint="@string/text_vendor"
             android:importantForAutofill="no"
             android:inputType="numberDecimal"
             tools:targetApi="o" />
@@ -222,7 +214,6 @@
             android:id="@+id/editQuantity"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:hint="@string/text_quantity"
             android:importantForAutofill="no"
             android:inputType="numberDecimal"
             android:textAppearance="@style/TextAppearance.AppCompat.Large"
