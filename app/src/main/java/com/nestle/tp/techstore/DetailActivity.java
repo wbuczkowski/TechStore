@@ -12,6 +12,7 @@ import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.EditText;
+import android.widget.ImageButton;
 import android.widget.TextView;
 
 import com.google.android.gms.common.api.CommonStatusCodes;
@@ -41,6 +42,7 @@ public class DetailActivity extends AppActivity {
 
     private String mOption;
     private TextView mTitle;
+    private ImageButton mSwitch;
     private EditText mWorkOrder;
     private EditText mCostCenter;
     private EditText mMaterial;
@@ -63,6 +65,23 @@ public class DetailActivity extends AppActivity {
         fab.setOnClickListener(fabListener);
         // get edit text controls
         mTitle = findViewById(R.id.textTitle);
+        mSwitch = findViewById(R.id.button_switch);
+        mSwitch.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                switch (mOption) {
+                    case OPTION_GOODS_ISSUE:
+                        mOption = OPTION_GOODS_RETURN;
+                        mTitle.setText(R.string.activity_goods_return);
+                        break;
+                    case OPTION_GOODS_RETURN:
+                        mOption = OPTION_GOODS_ISSUE;
+                        mTitle.setText(R.string.activity_goods_issue);
+                        break;
+                    default:
+                }
+            }
+        });
         mWorkOrder = findViewById(R.id.editWorkOrder);
         mCostCenter = findViewById(R.id.editCostCenter);
         mMaterial = findViewById(R.id.editMaterial);
@@ -90,7 +109,6 @@ public class DetailActivity extends AppActivity {
         // TODO: data validation
         // TODO: while disabling, differentiate between scanned/passed/default and restored values
         // TODO: switch from 3 to 4 on manual inventory number entry
-        // TODO: switch from 1 to 2 and from 2 to 1 on menu
     }
 
     private void receiveData() {
@@ -99,21 +117,21 @@ public class DetailActivity extends AppActivity {
         data = intent.getStringExtra(EXTRA_OPTION);
         mOption = (data.isEmpty()) ? OPTION_GOODS_ISSUE : data;
         data = intent.getStringExtra(EXTRA_WORK_ORDER);
-        if (data != null) if (!data.isEmpty()) mWorkOrder.setText(data);
+        if (data != null && !data.isEmpty()) mWorkOrder.setText(data);
         data = intent.getStringExtra(EXTRA_COST_CENTER);
-        if (data != null) if (!data.isEmpty()) mCostCenter.setText(data);
+        if (data != null && !data.isEmpty()) mCostCenter.setText(data);
         data = intent.getStringExtra(EXTRA_MATERIAL);
-        if (data != null) if (!data.isEmpty()) mMaterial.setText(data);
+        if (data != null && !data.isEmpty()) mMaterial.setText(data);
         data = intent.getStringExtra(EXTRA_PLANT);
-        if (data != null) if (!data.isEmpty()) mPlant.setText(data);
+        if (data != null && !data.isEmpty()) mPlant.setText(data);
         data = intent.getStringExtra(EXTRA_STORAGE_LOCATION);
-        if (data != null) if (!data.isEmpty()) mStorageLocation.setText(data);
+        if (data != null && !data.isEmpty()) mStorageLocation.setText(data);
         data = intent.getStringExtra(EXTRA_BIN);
-        if (data != null) if (!data.isEmpty()) mBin.setText(data);
+        if (data != null && !data.isEmpty()) mBin.setText(data);
         data = intent.getStringExtra(EXTRA_INVENTORY);
-        if (data != null) if (!data.isEmpty()) mInventory.setText(data);
+        if (data != null && !data.isEmpty()) mInventory.setText(data);
         data = intent.getStringExtra(EXTRA_VENDOR);
-        if (data != null) if (!data.isEmpty()) mVendor.setText(data);
+        if (data != null && !data.isEmpty()) mVendor.setText(data);
     }
 
     private void initializeVisibility() {
@@ -131,6 +149,7 @@ public class DetailActivity extends AppActivity {
         }
         if (mOption.equals(OPTION_GOODS_ISSUE) || mOption.equals(OPTION_GOODS_RETURN)) {
             // hide and clear inventory document number
+            mSwitch.setVisibility(View.VISIBLE);
             viewGroup = findViewById(R.id.layoutInventory);
             if (viewGroup != null) viewGroup.setVisibility(View.GONE);
             mInventory.setText("");
@@ -159,9 +178,11 @@ public class DetailActivity extends AppActivity {
                 if (viewGroup != null) viewGroup.setVisibility(View.VISIBLE);
                 mCostCenter.setEnabled(true);
             }
+
         }
         if (mOption.equals(OPTION_INVENTORY_WO_DOCUMENT) || mOption.equals(OPTION_INVENTORY_WITH_DOCUMENT)) {
             // show inventory document, hide and clear work order and cost center
+            mSwitch.setVisibility(View.INVISIBLE);
             viewGroup = findViewById(R.id.layoutInventory);
             if (viewGroup != null) viewGroup.setVisibility(View.VISIBLE);
             viewGroup = findViewById(R.id.layoutWorkOrder);
