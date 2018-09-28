@@ -1,6 +1,7 @@
 package com.nestle.tp.techstore;
 
 import android.content.Intent;
+import android.os.Build;
 import android.os.Bundle;
 import android.os.Environment;
 import android.support.annotation.Nullable;
@@ -25,7 +26,6 @@ public class MainActivity extends AppActivity implements View.OnClickListener {
 
     private static final int RC_GET_DATA = 9101;
 
-    private String mUserName;
     private TextView mStatus;
 
     @Override
@@ -46,6 +46,7 @@ public class MainActivity extends AppActivity implements View.OnClickListener {
         button.setOnClickListener(this);
         button = findViewById(R.id.button_display);
         button.setOnClickListener(this);
+        //TODO: persist user name?
         mUserName = getIntent().getStringExtra(Intent.EXTRA_TEXT);
         mStatus = findViewById(R.id.text_status);
         setStatusText();
@@ -229,9 +230,12 @@ public class MainActivity extends AppActivity implements View.OnClickListener {
     private boolean writeFile(Intent intent) {
         String state = Environment.getExternalStorageState();
         if (Environment.MEDIA_MOUNTED.equals(state)) {
-            // TODO: API < 19
-            File file = new File(Environment.getExternalStoragePublicDirectory(
-                    Environment.DIRECTORY_DOCUMENTS), getString(R.string.app_name));
+            File file = (Build.VERSION.SDK_INT >= 19) ?
+                    new File(Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_DOCUMENTS),
+                            getString(R.string.app_name)) :
+                    new File(Environment.getExternalStorageDirectory(),
+                            "Documents/" + getString(R.string.app_name));
+
             if (!file.exists() && !file.mkdirs()) {
                 Snackbar.make(findViewById(R.id.fab), "Directory not created", Snackbar.LENGTH_LONG).show();
                 return false;
@@ -397,10 +401,13 @@ public class MainActivity extends AppActivity implements View.OnClickListener {
         String state = Environment.getExternalStorageState();
         String statusText = getString(R.string.text_status);
         if (Environment.MEDIA_MOUNTED.equals(state)) {
-            // TODO: API < 19
-            File file = new File(Environment.getExternalStoragePublicDirectory(
-                    Environment.DIRECTORY_DOCUMENTS), getString(R.string.app_name)
-                    + "/" + getString(R.string.file_name));
+            File file = (Build.VERSION.SDK_INT >= 19) ?
+                    new File(Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_DOCUMENTS),
+                            getString(R.string.app_name)
+                                    + "/" + getString(R.string.file_name)) :
+                    new File(Environment.getExternalStorageDirectory(),
+                            "Documents/" + getString(R.string.app_name)
+                                    + "/" + getString(R.string.file_name));
             FileInputStream fis = null;
             BufferedInputStream bis = null;
             int count = 0;

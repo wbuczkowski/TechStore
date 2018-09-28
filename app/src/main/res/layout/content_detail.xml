@@ -49,6 +49,7 @@
             android:labelFor="@id/editWorkOrder"
             android:text="@string/text_work_order" />
 
+
         <EditText
             android:id="@+id/editWorkOrder"
             android:layout_width="match_parent"
@@ -56,7 +57,17 @@
             android:importantForAutofill="no"
             android:inputType="numberDecimal"
             tools:targetApi="o" />
+
     </LinearLayout>
+
+    <TextView
+        android:id="@+id/textWorkOrderError"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:textColor="?attr/colorError"
+        android:visibility="gone"
+        tools:text="Error Work Order"
+        tools:visibility="visible" />
 
     <LinearLayout
         android:id="@+id/layoutCostCenter"
@@ -72,6 +83,7 @@
             android:labelFor="@id/editCostCenter"
             android:text="@string/text_cost_center" />
 
+
         <EditText
             android:id="@+id/editCostCenter"
             android:layout_width="match_parent"
@@ -80,6 +92,15 @@
             android:inputType="textCapCharacters"
             tools:targetApi="o" />
     </LinearLayout>
+
+    <TextView
+        android:id="@+id/textCostCenterError"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:textColor="?attr/colorError"
+        android:visibility="gone"
+        tools:text="Error Work Order"
+        tools:visibility="visible" />
 
     <LinearLayout
         android:id="@+id/layoutInventory"
@@ -105,6 +126,15 @@
             tools:targetApi="o" />
     </LinearLayout>
 
+    <TextView
+        android:id="@+id/textInventoryError"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:textColor="?attr/colorError"
+        android:visibility="gone"
+        tools:text="Error Work Order"
+        tools:visibility="visible" />
+
     <LinearLayout
         android:id="@+id/layoutMaterial"
         android:layout_width="match_parent"
@@ -127,6 +157,15 @@
             android:inputType="numberDecimal"
             tools:targetApi="o" />
     </LinearLayout>
+
+    <TextView
+        android:id="@+id/textMaterialError"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:textColor="?attr/colorError"
+        android:visibility="gone"
+        tools:text="Error Work Order"
+        tools:visibility="visible" />
 
     <LinearLayout
         android:id="@+id/layoutPlant"
@@ -169,6 +208,15 @@
             tools:targetApi="o" />
     </LinearLayout>
 
+    <TextView
+        android:id="@+id/textPlantError"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:textColor="?attr/colorError"
+        android:visibility="gone"
+        tools:text="Error Work Order"
+        tools:visibility="visible" />
+
     <LinearLayout
         android:id="@+id/layoutBin"
         android:layout_width="match_parent"
@@ -191,6 +239,15 @@
             android:inputType="textCapCharacters"
             tools:targetApi="o" />
     </LinearLayout>
+
+    <TextView
+        android:id="@+id/textBinError"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:textColor="?attr/colorError"
+        android:visibility="gone"
+        tools:text="Error Work Order"
+        tools:visibility="visible" />
 
     <LinearLayout
         android:id="@+id/layoutVendor"
@@ -215,6 +272,15 @@
             tools:targetApi="o" />
     </LinearLayout>
 
+    <TextView
+        android:id="@+id/textVendorError"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:textColor="?attr/colorError"
+        android:visibility="gone"
+        tools:text="Error Work Order"
+        tools:visibility="visible" />
+
     <LinearLayout
         android:id="@+id/layoutQuantity"
         android:layout_width="match_parent"
@@ -238,4 +304,14 @@
             android:textAppearance="@style/TextAppearance.AppCompat.Large"
             tools:targetApi="o" />
     </LinearLayout>
+
+    <TextView
+        android:id="@+id/textQuantityError"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:textColor="?attr/colorError"
+        android:visibility="gone"
+        tools:text="Error Work Order"
+        tools:visibility="visible" />
+
 </LinearLayout>

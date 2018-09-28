@@ -156,7 +156,6 @@ public class ZBarFullScannerActivity extends AppCompatActivity implements
         data.putExtra("Format", rawResult.getBarcodeFormat().getName());
         setResult(CommonStatusCodes.SUCCESS, data);
         finish();
-        // TODO check if instant is saved
     }
 
     @Override

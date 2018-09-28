@@ -53,6 +53,7 @@ public abstract class AppActivity extends AppCompatActivity implements LogoutTim
     private int logoutTime = 300000;
 
     private String scanTech;
+    protected String mUserName = "";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -104,6 +105,10 @@ public abstract class AppActivity extends AppCompatActivity implements LogoutTim
         useFlash = sharedPref.getBoolean(KEY_PREF_USE_FLASH, false);
         logoutTime = Integer.parseInt(sharedPref.getString(KEY_PREF_TIMEOUT, "300000"));
         LogoutTimerUtility.startLogoutTimer(this, this, logoutTime);
+        if (mUserName.isEmpty()) {
+            sharedPref = getPreferences(MODE_PRIVATE);
+            mUserName = sharedPref.getString("UserName", "");
+        }
     }
 
     @Override
@@ -114,6 +119,11 @@ public abstract class AppActivity extends AppCompatActivity implements LogoutTim
             unregisterReceiver(broadcastReceiver);
         }
         LogoutTimerUtility.stopLogoutTimer();
+        // save username for the case the app is killed
+        SharedPreferences sharedPref = getPreferences(MODE_PRIVATE);
+        SharedPreferences.Editor editor = sharedPref.edit();
+        editor.putString("UserName", mUserName);
+        editor.apply();
     }
 
     @Override
@@ -201,7 +211,7 @@ public abstract class AppActivity extends AppCompatActivity implements LogoutTim
             case IntentIntegrator.REQUEST_CODE:
                 //ZXing
                 if (resultCode == CommonStatusCodes.SUCCESS
-                        || resultCode == CommonStatusCodes.SUCCESS_CACHE ) {
+                        || resultCode == CommonStatusCodes.SUCCESS_CACHE) {
                     if (intent != null) {
                         //retrieve scan result
                         IntentResult scanningResult =
