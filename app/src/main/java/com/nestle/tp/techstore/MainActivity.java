@@ -26,6 +26,7 @@ public class MainActivity extends AppActivity implements View.OnClickListener {
 
     private static final int RC_GET_DATA = 9101;
 
+    private String mUserName;
     private TextView mStatus;
 
     @Override
@@ -46,7 +47,6 @@ public class MainActivity extends AppActivity implements View.OnClickListener {
         button.setOnClickListener(this);
         button = findViewById(R.id.button_display);
         button.setOnClickListener(this);
-        //TODO: persist user name?
         mUserName = getIntent().getStringExtra(Intent.EXTRA_TEXT);
         mStatus = findViewById(R.id.text_status);
         setStatusText();
