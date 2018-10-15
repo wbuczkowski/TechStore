@@ -25,23 +25,6 @@ import java.util.Locale;
 
 public class DetailActivity extends AppActivity {
 
-    public static final String EXTRA_OPTION = "OPTION";
-    public static final String EXTRA_WORK_ORDER = "WORK_ORDER";
-    public static final String EXTRA_COST_CENTER = "COST_CENTER";
-    public static final String EXTRA_MATERIAL = "MATERIAL";
-    public static final String EXTRA_PLANT = "PLANT";
-    public static final String EXTRA_STORAGE_LOCATION = "STORAGE_LOCATION";
-    public static final String EXTRA_BIN = "BIN";
-    public static final String EXTRA_QUANTITY = "QUANTITY";
-    public static final String EXTRA_DATE = "DATE";
-    public static final String EXTRA_INVENTORY = "INVENTORY";
-    public static final String EXTRA_VENDOR = "VENDOR";
-
-    public static final String OPTION_GOODS_ISSUE = "1";
-    public static final String OPTION_GOODS_RETURN = "2";
-    public static final String OPTION_INVENTORY_WO_DOCUMENT = "3";
-    public static final String OPTION_INVENTORY_WITH_DOCUMENT = "4";
-
     private String mOption = "";
     private TextView mTitle;
     private ImageButton mSwitch;

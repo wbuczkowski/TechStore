@@ -56,9 +56,18 @@ public class LoginActivity extends AppActivity {
 
             }
         });
-
         initDataWedge();
         initCamera();
+        // clear the saved data
+        SharedPreferences sharedPref = getPreferences(MODE_PRIVATE);
+        SharedPreferences.Editor editor = sharedPref.edit();
+        editor.putString(EXTRA_WORK_ORDER, "");
+        editor.putString(EXTRA_COST_CENTER, "");
+        editor.putString(EXTRA_INVENTORY, "");
+        editor.putString(EXTRA_PLANT, "");
+        editor.putString(EXTRA_STORAGE_LOCATION, "");
+        editor.putString(EXTRA_VENDOR, "");
+        editor.apply();
     }
 
     @Override

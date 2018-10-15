@@ -64,12 +64,12 @@ public class MainActivity extends AppActivity implements View.OnClickListener {
             switch (splitData[0].length()) {
                 case 10:
                     // this is a work order
-                    option = DetailActivity.OPTION_GOODS_ISSUE;
+                    option = OPTION_GOODS_ISSUE;
                     workOrder = splitData[0];
                     break;
                 case 9:
                     // this is a material
-                    option = DetailActivity.OPTION_GOODS_ISSUE;
+                    option = OPTION_GOODS_ISSUE;
                     materialNumber = splitData[0];
                     if (splitData.length > 1) {
                         plant = splitData[1];
@@ -87,7 +87,7 @@ public class MainActivity extends AppActivity implements View.OnClickListener {
             materialNumber = splitData[0].substring(1, 10);
             if (materialNumber.matches("\\d{9}")) {
                 // material number correct
-                option = DetailActivity.OPTION_GOODS_ISSUE;
+                option = OPTION_GOODS_ISSUE;
                 if (splitData.length > 1) {
                     plant = splitData[1];
                     if (splitData.length > 2) {
@@ -103,7 +103,7 @@ public class MainActivity extends AppActivity implements View.OnClickListener {
             materialNumber = splitData[0].substring(1, 10);
             if (materialNumber.matches("\\d{9}")) {
                 // material number correct
-                option = DetailActivity.OPTION_GOODS_ISSUE;
+                option = OPTION_GOODS_ISSUE;
                 if (splitData.length > 1) {
                     if (splitData[1].matches("\\d{9}")) {
                         // this is a vendor code
@@ -124,15 +124,15 @@ public class MainActivity extends AppActivity implements View.OnClickListener {
             }
         } else if (splitData[0].startsWith("C")) {
             // this is a cost center
-            option = DetailActivity.OPTION_GOODS_ISSUE;
+            option = OPTION_GOODS_ISSUE;
             costCenter = splitData[0].substring(1);
         } else if (splitData[0].matches("V\\d{9}")) {
             // this is a vendor
-            option = DetailActivity.OPTION_GOODS_ISSUE;
+            option = OPTION_GOODS_ISSUE;
             vendor = splitData[0].substring(1);
         } else if (splitData[0].matches("I\\d{9}")) {
             // this is an inventory document
-            option = DetailActivity.OPTION_INVENTORY_WITH_DOCUMENT;
+            option = OPTION_INVENTORY_WITH_DOCUMENT;
             inventory = splitData[0].substring(1);
         }
         if (option.isEmpty()) {
@@ -141,15 +141,15 @@ public class MainActivity extends AppActivity implements View.OnClickListener {
                     Snackbar.LENGTH_LONG).show();
         } else {
             Intent intent = new Intent(this, DetailActivity.class);
-            intent.putExtra(DetailActivity.EXTRA_OPTION, option);
-            intent.putExtra(DetailActivity.EXTRA_WORK_ORDER, workOrder);
-            intent.putExtra(DetailActivity.EXTRA_COST_CENTER, costCenter);
-            intent.putExtra(DetailActivity.EXTRA_MATERIAL, materialNumber);
-            intent.putExtra(DetailActivity.EXTRA_PLANT, plant);
-            intent.putExtra(DetailActivity.EXTRA_STORAGE_LOCATION, storageLocation);
-            intent.putExtra(DetailActivity.EXTRA_BIN, bin);
-            intent.putExtra(DetailActivity.EXTRA_VENDOR, vendor);
-            intent.putExtra(DetailActivity.EXTRA_INVENTORY, inventory);
+            intent.putExtra(EXTRA_OPTION, option);
+            intent.putExtra(EXTRA_WORK_ORDER, workOrder);
+            intent.putExtra(EXTRA_COST_CENTER, costCenter);
+            intent.putExtra(EXTRA_MATERIAL, materialNumber);
+            intent.putExtra(EXTRA_PLANT, plant);
+            intent.putExtra(EXTRA_STORAGE_LOCATION, storageLocation);
+            intent.putExtra(EXTRA_BIN, bin);
+            intent.putExtra(EXTRA_VENDOR, vendor);
+            intent.putExtra(EXTRA_INVENTORY, inventory);
             startActivityForResult(intent, RC_GET_DATA);
         }
     }
@@ -160,17 +160,17 @@ public class MainActivity extends AppActivity implements View.OnClickListener {
         switch (view.getId()) {
             case R.id.button_goods_issue:
                 intent = new Intent(this, DetailActivity.class);
-                intent.putExtra(DetailActivity.EXTRA_OPTION, DetailActivity.OPTION_GOODS_ISSUE);
+                intent.putExtra(EXTRA_OPTION, OPTION_GOODS_ISSUE);
                 startActivityForResult(intent, RC_GET_DATA);
                 break;
             case R.id.button_goods_return:
                 intent = new Intent(this, DetailActivity.class);
-                intent.putExtra(DetailActivity.EXTRA_OPTION, DetailActivity.OPTION_GOODS_RETURN);
+                intent.putExtra(EXTRA_OPTION, OPTION_GOODS_RETURN);
                 startActivityForResult(intent, RC_GET_DATA);
                 break;
             case R.id.button_inventory:
                 intent = new Intent(this, DetailActivity.class);
-                intent.putExtra(DetailActivity.EXTRA_OPTION, DetailActivity.OPTION_INVENTORY_WO_DOCUMENT);
+                intent.putExtra(EXTRA_OPTION, OPTION_INVENTORY_WO_DOCUMENT);
                 startActivityForResult(intent, RC_GET_DATA);
                 break;
             case R.id.button_display:
@@ -290,15 +290,15 @@ public class MainActivity extends AppActivity implements View.OnClickListener {
         String dataLine = data;
 
         switch (data) {
-            case DetailActivity.OPTION_GOODS_ISSUE:
-            case DetailActivity.OPTION_GOODS_RETURN:
-                data = intent.getStringExtra(DetailActivity.EXTRA_WORK_ORDER);
+            case OPTION_GOODS_ISSUE:
+            case OPTION_GOODS_RETURN:
+                data = intent.getStringExtra(EXTRA_WORK_ORDER);
                 if (data != null && !data.isEmpty()) {
                     // write work order
                     dataLine = dataLine.concat("\t" + data);
                 } else {
                     // no work order, take cost center
-                    data = intent.getStringExtra(DetailActivity.EXTRA_COST_CENTER);
+                    data = intent.getStringExtra(EXTRA_COST_CENTER);
                     if (data != null && !data.isEmpty()) {
                         // write cost center
                         dataLine = dataLine.concat("\t" + data);
@@ -308,8 +308,8 @@ public class MainActivity extends AppActivity implements View.OnClickListener {
                     }
                 }
                 break;
-            case DetailActivity.OPTION_INVENTORY_WO_DOCUMENT:
-            case DetailActivity.OPTION_INVENTORY_WITH_DOCUMENT:
+            case OPTION_INVENTORY_WO_DOCUMENT:
+            case OPTION_INVENTORY_WITH_DOCUMENT:
                 // write spacer
                 dataLine = dataLine.concat("\t");
                 break;
@@ -320,11 +320,11 @@ public class MainActivity extends AppActivity implements View.OnClickListener {
 
         // write material number etc.
         String[][] ii = {
-                {DetailActivity.EXTRA_MATERIAL, "true"},
-                {DetailActivity.EXTRA_PLANT, "true"},
-                {DetailActivity.EXTRA_STORAGE_LOCATION, "true"},
-                {DetailActivity.EXTRA_BIN, "false"},
-                {DetailActivity.EXTRA_QUANTITY, "true"}
+                {EXTRA_MATERIAL, "true"},
+                {EXTRA_PLANT, "true"},
+                {EXTRA_STORAGE_LOCATION, "true"},
+                {EXTRA_BIN, "false"},
+                {EXTRA_QUANTITY, "true"}
         };
         // for (int i = 0; i<map.length;i++){
         for (String[] i : ii) {
@@ -340,11 +340,11 @@ public class MainActivity extends AppActivity implements View.OnClickListener {
             }
         }
 //        HashMap<String, Boolean> map = new HashMap<>();
-//        map.put(DetailActivity.EXTRA_MATERIAL, true);
-//        map.put(DetailActivity.EXTRA_PLANT, true);
-//        map.put(DetailActivity.EXTRA_STORAGE_LOCATION, true);
-//        map.put(DetailActivity.EXTRA_BIN, false);
-//        map.put(DetailActivity.EXTRA_QUANTITY, true);
+//        map.put(EXTRA_MATERIAL, true);
+//        map.put(EXTRA_PLANT, true);
+//        map.put(EXTRA_STORAGE_LOCATION, true);
+//        map.put(EXTRA_BIN, false);
+//        map.put(EXTRA_QUANTITY, true);
 //        for (String key : map.keySet()) {
 //            data = intent.getStringExtra(key);
 //            if (data != null && !data.isEmpty()) { // write data
@@ -363,7 +363,7 @@ public class MainActivity extends AppActivity implements View.OnClickListener {
         dataLine = dataLine.concat("\t" + mUserName);
 
         //write date
-        data = intent.getStringExtra(DetailActivity.EXTRA_DATE);
+        data = intent.getStringExtra(EXTRA_DATE);
         if (data != null && !data.isEmpty()) { // write data
             dataLine = dataLine.concat("\t" + data);
         } else {
@@ -371,9 +371,9 @@ public class MainActivity extends AppActivity implements View.OnClickListener {
         }
 
         // write inventory number, if provided
-        if (data.equals(DetailActivity.OPTION_INVENTORY_WITH_DOCUMENT)) {
+        if (data.equals(OPTION_INVENTORY_WITH_DOCUMENT)) {
             // write inventory document
-            data = intent.getStringExtra(DetailActivity.EXTRA_INVENTORY);
+            data = intent.getStringExtra(EXTRA_INVENTORY);
             if (data != null && !data.isEmpty()) { // write data
                 dataLine = dataLine.concat("\t" + data);
             } else {
@@ -385,7 +385,7 @@ public class MainActivity extends AppActivity implements View.OnClickListener {
             dataLine = dataLine.concat("\t");
         }
         // write vendor
-        data = intent.getStringExtra(DetailActivity.EXTRA_VENDOR);
+        data = intent.getStringExtra(EXTRA_VENDOR);
         if (data != null && !data.isEmpty()) {
             // write vendor
             dataLine = dataLine.concat("\t" + data);

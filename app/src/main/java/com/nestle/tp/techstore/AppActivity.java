@@ -23,6 +23,24 @@ import com.google.zxing.integration.android.IntentResult;
 import java.util.List;
 
 public abstract class AppActivity extends AppCompatActivity implements LogoutTimerUtility.LogOutListener {
+
+    static final String EXTRA_OPTION = "OPTION";
+    static final String EXTRA_WORK_ORDER = "WORK_ORDER";
+    static final String EXTRA_COST_CENTER = "COST_CENTER";
+    static final String EXTRA_MATERIAL = "MATERIAL";
+    static final String EXTRA_PLANT = "PLANT";
+    static final String EXTRA_STORAGE_LOCATION = "STORAGE_LOCATION";
+    static final String EXTRA_BIN = "BIN";
+    static final String EXTRA_QUANTITY = "QUANTITY";
+    static final String EXTRA_DATE = "DATE";
+    static final String EXTRA_INVENTORY = "INVENTORY";
+    static final String EXTRA_VENDOR = "VENDOR";
+
+    static final String OPTION_GOODS_ISSUE = "1";
+    static final String OPTION_GOODS_RETURN = "2";
+    static final String OPTION_INVENTORY_WITH_DOCUMENT = "4";
+    final String OPTION_INVENTORY_WO_DOCUMENT = "3";
+
     static final String ACTION = "com.symbol.datawedge.api.ACTION";
     static final String SOFT_SCAN_TRIGGER = "com.symbol.datawedge.api.SOFT_SCAN_TRIGGER";
     static final String START_SCANNING = "START_SCANNING";
