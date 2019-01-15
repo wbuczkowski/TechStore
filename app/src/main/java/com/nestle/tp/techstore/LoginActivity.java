@@ -6,6 +6,7 @@ import android.content.pm.PackageInfo;
 import android.content.pm.PackageManager;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
+import android.support.annotation.NonNull;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
 import android.view.Menu;
@@ -115,7 +116,7 @@ public class LoginActivity extends AppActivity {
         }
     }
 
-    private static int compareVersion(String v1, String v2) {
+    private static int compareVersion(@NonNull String v1, @NonNull String v2) {
         List<String> l1 = new ArrayList<>(Arrays.asList(
                 v1.replaceAll("\\s", "").split("\\.")));
         List<String> l2 = new ArrayList<>(Arrays.asList(

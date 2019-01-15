@@ -485,7 +485,7 @@
                     currentZoom = parameters.getZoom() + 1;
                     float newZoom;
                     if (scale > 1) {
-                        newZoom = currentZoom + scale * (maxZoom / 10);
+                        newZoom = currentZoom + scale * (maxZoom / 10.0f);
                     } else {
                         newZoom = currentZoom * scale;
                     }

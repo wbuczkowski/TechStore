@@ -22,8 +22,6 @@ import android.view.View;
 
 import com.google.android.gms.vision.CameraSource;
 
-import java.util.ArrayList;
-import java.util.Collection;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;

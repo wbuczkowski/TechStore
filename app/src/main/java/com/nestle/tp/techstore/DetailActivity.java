@@ -738,7 +738,7 @@ public class DetailActivity extends AppActivity {
             mQuantity.setError("Enter quantity");
             return false;
         } else {
-            Double q = Double.parseDouble(s.toString());
+            double q = Double.parseDouble(s.toString());
             if (q == 0.0) {
                 mQuantity.setError("Quantity cannot be zero");
                 return false;

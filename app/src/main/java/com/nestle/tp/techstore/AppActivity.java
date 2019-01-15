@@ -7,7 +7,6 @@ import android.content.IntentFilter;
 import android.content.SharedPreferences;
 import android.content.pm.PackageManager;
 import android.content.pm.ResolveInfo;
-import android.os.Bundle;
 import android.preference.PreferenceActivity;
 import android.preference.PreferenceManager;
 import android.support.design.widget.Snackbar;
@@ -21,6 +20,7 @@ import com.google.zxing.integration.android.IntentIntegrator;
 import com.google.zxing.integration.android.IntentResult;
 
 import java.util.List;
+import java.util.Objects;
 
 public abstract class AppActivity extends AppCompatActivity implements LogoutTimerUtility.LogOutListener {
 
@@ -41,7 +41,7 @@ public abstract class AppActivity extends AppCompatActivity implements LogoutTim
     static final String OPTION_INVENTORY_WITH_DOCUMENT = "4";
     final String OPTION_INVENTORY_WO_DOCUMENT = "3";
 
-    static final String ACTION = "com.symbol.datawedge.api.ACTION";
+    protected static final String ACTION = "com.symbol.datawedge.api.ACTION";
     static final String SOFT_SCAN_TRIGGER = "com.symbol.datawedge.api.SOFT_SCAN_TRIGGER";
     static final String START_SCANNING = "START_SCANNING";
 
@@ -72,9 +72,9 @@ public abstract class AppActivity extends AppCompatActivity implements LogoutTim
 
     private String scanTech;
 
-    @Override
-    protected void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
+//    @Override
+//    protected void onCreate(Bundle savedInstanceState) {
+//        super.onCreate(savedInstanceState);
 //        setContentView(R.layout.activity_main);
 //        Toolbar toolbar = findViewById(R.id.toolbar);
 //        setSupportActionBar(toolbar);
@@ -82,7 +82,7 @@ public abstract class AppActivity extends AppCompatActivity implements LogoutTim
 //        if (actionBar != null) actionBar.setDisplayHomeAsUpEnabled(true);
 //        FloatingActionButton fab = findViewById(R.id.fab);
 //        fab.setOnClickListener(fabListener);
-    }
+//    }
 
     @Override
     protected void onResume() {
@@ -91,7 +91,7 @@ public abstract class AppActivity extends AppCompatActivity implements LogoutTim
         SharedPreferences sharedPref = PreferenceManager.getDefaultSharedPreferences(this);
         // useDataWedge = sharedPref.getBoolean(KEY_PREF_USE_DATAWEDGE, true);
         scanTech = sharedPref.getString(KEY_PREF_SCAN_TECHNOLOGY, "");
-        if (scanTech.equals(KEY_PREF_SCAN_NONE)) {
+        if (Objects.equals(scanTech, KEY_PREF_SCAN_NONE)) {
             Snackbar.make(findViewById(R.id.fab),
                     "Please select scanning technology!", Snackbar.LENGTH_LONG)
                     .setAction(R.string.action_settings, new View.OnClickListener() {
@@ -120,7 +120,7 @@ public abstract class AppActivity extends AppCompatActivity implements LogoutTim
 //        useCamera = sharedPref.getBoolean(KEY_PREF_USE_CAMERA, !useDataWedge);
         useAutoFocus = sharedPref.getBoolean(KEY_PREF_USE_AUTO_FOCUS, false);
         useFlash = sharedPref.getBoolean(KEY_PREF_USE_FLASH, false);
-        logoutTime = Integer.parseInt(sharedPref.getString(KEY_PREF_TIMEOUT, "300000"));
+        logoutTime = Integer.parseInt(Objects.requireNonNull(sharedPref.getString(KEY_PREF_TIMEOUT, "300000")));
         LogoutTimerUtility.startLogoutTimer(this, this, logoutTime);
     }
 
