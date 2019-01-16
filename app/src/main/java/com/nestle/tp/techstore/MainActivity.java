@@ -137,7 +137,7 @@ public class MainActivity extends AppActivity implements View.OnClickListener {
         }
         if (option.isEmpty()) {
             Snackbar.make(findViewById(R.id.fab),
-                    "Unknown barcode",
+                    R.string.barcode_unknown,
                     Snackbar.LENGTH_LONG).show();
         } else {
             Intent intent = new Intent(this, DetailActivity.class);
@@ -213,12 +213,12 @@ public class MainActivity extends AppActivity implements View.OnClickListener {
             case RC_GET_DATA:
                 if (resultCode == CommonStatusCodes.SUCCESS) {
                     Snackbar.make(findViewById(R.id.fab),
-                            "Success",
+                            R.string.success,
                             Snackbar.LENGTH_LONG).show();
                     if (writeFile(data)) setStatusText();
                 } else {
                     Snackbar.make(findViewById(R.id.fab),
-                            "Cancelled",
+                            R.string.cancelled,
                             Snackbar.LENGTH_LONG).show();
                 }
                 break;
@@ -237,14 +237,14 @@ public class MainActivity extends AppActivity implements View.OnClickListener {
                             "Documents/" + getString(R.string.app_name));
 
             if (!file.exists() && !file.mkdirs()) {
-                Snackbar.make(findViewById(R.id.fab), "Directory not created", Snackbar.LENGTH_LONG).show();
+                Snackbar.make(findViewById(R.id.fab), R.string.directory_error, Snackbar.LENGTH_LONG).show();
                 return false;
             }
             file = new File(file.getPath() + "/" + getString(R.string.file_name));
             if (!file.exists()) {
                 try {
                     if (!file.createNewFile()) {
-                        Snackbar.make(findViewById(R.id.fab), "Cannot create file", Snackbar.LENGTH_LONG).show();
+                        Snackbar.make(findViewById(R.id.fab), R.string.file_error, Snackbar.LENGTH_LONG).show();
                         return false;
                     }
                 } catch (IOException e) {
@@ -274,7 +274,7 @@ public class MainActivity extends AppActivity implements View.OnClickListener {
                 }
             }
         } else {
-            Snackbar.make(findViewById(R.id.fab), "External storage not writable", Snackbar.LENGTH_LONG).show();
+            Snackbar.make(findViewById(R.id.fab), R.string.storage_error, Snackbar.LENGTH_LONG).show();
             return false;
         }
     }

@@ -57,7 +57,7 @@ public class LoginActivity extends AppActivity {
                     startActivity(intent);
                 } else {
                     Snackbar.make(findViewById(R.id.fab),
-                            "Not a user ID!",
+                            R.string.login_error,
                             Snackbar.LENGTH_LONG).show();
                 }
 
@@ -251,7 +251,7 @@ public class LoginActivity extends AppActivity {
             startActivity(intent);
         } else {
             Snackbar.make(findViewById(R.id.fab),
-                    "Not a user ID!",
+                    R.string.login_error,
                     Snackbar.LENGTH_LONG).show();
         }
     }

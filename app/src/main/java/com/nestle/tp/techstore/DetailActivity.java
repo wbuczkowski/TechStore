@@ -25,6 +25,9 @@ import java.util.Locale;
 
 public class DetailActivity extends AppActivity {
 
+    private static final String KEY_PREF_DEFAULT_PLANT = "pref_default_plant";
+    private static final String KEY_PREF_DEFAULT_STORAGE_LOCATION = "pref_default_storage_location";
+
     private String mOption = "";
     private TextView mTitle;
     private ImageButton mSwitch;
@@ -124,12 +127,12 @@ public class DetailActivity extends AppActivity {
         // get defaults from preferences
         sharedPref = PreferenceManager.getDefaultSharedPreferences(this);
         if (mPlant.length() == 0) {
-            mPlant.setText(sharedPref.getString("pref_default_plant", ""));
+            mPlant.setText(sharedPref.getString(KEY_PREF_DEFAULT_PLANT, ""));
             // if read from defaults: disable field
             mPlant.setEnabled(mPlant.length() == 0);
         }
         if (mStorageLocation.length() == 0) {
-            mStorageLocation.setText(sharedPref.getString("pref_default_storage_location", ""));
+            mStorageLocation.setText(sharedPref.getString(KEY_PREF_DEFAULT_STORAGE_LOCATION, ""));
             // if read from defaults: disable field
             mStorageLocation.setEnabled(mStorageLocation.length() == 0);
         }
@@ -273,7 +276,7 @@ public class DetailActivity extends AppActivity {
                     finish();
                 } else {
                     Snackbar.make(findViewById(R.id.fab),
-                            "Please complete data entry",
+                            R.string.save_failure,
                             Snackbar.LENGTH_LONG).show();
                 }
                 return true;
@@ -417,7 +420,7 @@ public class DetailActivity extends AppActivity {
             }
         }
         if (unknown) Snackbar.make(findViewById(R.id.fab),
-                "Unknown barcode",
+                R.string.barcode_unknown,
                 Snackbar.LENGTH_LONG).show();
     }
 
@@ -447,6 +450,7 @@ public class DetailActivity extends AppActivity {
             validateCostCenter(s);
         }
     };
+
     private final TextWatcher InventoryWatcher = new TextWatcher() {
         @Override
         public void beforeTextChanged(CharSequence s, int start, int count, int after) {
@@ -463,6 +467,7 @@ public class DetailActivity extends AppActivity {
             validateInventory(s);
         }
     };
+
     private final TextWatcher MaterialWatcher = new TextWatcher() {
         @Override
         public void beforeTextChanged(CharSequence s, int start, int count, int after) {
@@ -479,6 +484,7 @@ public class DetailActivity extends AppActivity {
             validateMaterial(s);
         }
     };
+
     private final TextWatcher PlantWatcher = new TextWatcher() {
         @Override
         public void beforeTextChanged(CharSequence s, int start, int count, int after) {
@@ -495,6 +501,7 @@ public class DetailActivity extends AppActivity {
             validatePlant(s);
         }
     };
+
     private final TextWatcher StorageLocationWatcher = new TextWatcher() {
         @Override
         public void beforeTextChanged(CharSequence s, int start, int count, int after) {
@@ -511,6 +518,7 @@ public class DetailActivity extends AppActivity {
             validateStorageLocation(s);
         }
     };
+
     private final TextWatcher BinWatcher = new TextWatcher() {
         @Override
         public void beforeTextChanged(CharSequence s, int start, int count, int after) {
@@ -527,6 +535,7 @@ public class DetailActivity extends AppActivity {
             validateBin(s);
         }
     };
+
     private final TextWatcher VendorWatcher = new TextWatcher() {
         @Override
         public void beforeTextChanged(CharSequence s, int start, int count, int after) {
@@ -543,6 +552,7 @@ public class DetailActivity extends AppActivity {
             validateVendor(s);
         }
     };
+
     private final TextWatcher QuantityWatcher = new TextWatcher() {
         @Override
         public void beforeTextChanged(CharSequence s, int start, int count, int after) {
@@ -573,8 +583,8 @@ public class DetailActivity extends AppActivity {
                     // show up cost center, if hidden before
                     ViewGroup viewGroup = findViewById(R.id.layoutCostCenter);
                     if (viewGroup != null) viewGroup.setVisibility(View.VISIBLE);
-                    mWorkOrder.setError("Enter either Work Order or Cost Center");
-                    mCostCenter.setError("Enter either Work Order or Cost Center");
+                    mWorkOrder.setError(getString(R.string.work_order_empty));
+                    mCostCenter.setError(getString(R.string.work_order_empty));
                     return false;
                 } else {
                     // work order is empty, but cost center is not
@@ -594,7 +604,7 @@ public class DetailActivity extends AppActivity {
                     mWorkOrder.setError(null);
                     return true;
                 } else {
-                    mWorkOrder.setError("Work Order should be 10 digits");
+                    mWorkOrder.setError(getString(R.string.work_order_length));
                     return false;
                 }
             }
@@ -612,8 +622,8 @@ public class DetailActivity extends AppActivity {
                     // show up work order, if hidden before
                     ViewGroup viewGroup = findViewById(R.id.layoutWorkOrder);
                     if (viewGroup != null) viewGroup.setVisibility(View.VISIBLE);
-                    mCostCenter.setError("Enter either Work Order or Cost Center");
-                    mWorkOrder.setError("Enter either Work Order or Cost Center");
+                    mCostCenter.setError(getString(R.string.work_order_empty));
+                    mWorkOrder.setError(getString(R.string.work_order_empty));
                     return false;
                 } else {
                     // cost center is empty, but work order is not
@@ -633,7 +643,7 @@ public class DetailActivity extends AppActivity {
                     mCostCenter.setError(null);
                     return true;
                 } else {
-                    mCostCenter.setError("Cost Center should be 7 to 10 characters");
+                    mCostCenter.setError(getString(R.string.cost_center_length));
                     return false;
                 }
             }
@@ -657,7 +667,7 @@ public class DetailActivity extends AppActivity {
                         mOption = OPTION_INVENTORY_WITH_DOCUMENT;
                     return true;
                 }
-                mInventory.setError("Inventory document number should be 9 digits");
+                mInventory.setError(getString(R.string.inventory_length));
                 return false;
             }
         } else {
@@ -668,39 +678,39 @@ public class DetailActivity extends AppActivity {
 
     private boolean validateMaterial(Editable s) {
         if (s == null || s.length() == 0) {
-            mMaterial.setError("Enter material number");
+            mMaterial.setError(getString(R.string.material_empty));
             return false;
         } else if (s.length() == 9) {
             mMaterial.setError(null);
             return true;
         } else {
-            mMaterial.setError("Material number should be 9 digits");
+            mMaterial.setError(getString(R.string.material_length));
             return false;
         }
     }
 
     private boolean validatePlant(Editable s) {
         if (s == null || s.length() == 0) {
-            mPlant.setError("Enter plant code");
+            mPlant.setError(getString(R.string.plant_empty));
             return false;
         } else if (s.length() == 4) {
             mPlant.setError(null);
             return true;
         } else {
-            mPlant.setError("Plant code should be 4 characters");
+            mPlant.setError(getString(R.string.plant_length));
             return false;
         }
     }
 
     private boolean validateStorageLocation(Editable s) {
         if (s == null || s.length() == 0) {
-            mStorageLocation.setError("Enter storage location code");
+            mStorageLocation.setError(getString(R.string.storage_location_empty));
             return false;
         } else if (s.length() == 4) {
             mStorageLocation.setError(null);
             return true;
         } else {
-            mStorageLocation.setError("Storage location code should be 4 characters");
+            mStorageLocation.setError(getString(R.string.storage_location_length));
             return false;
         }
     }
@@ -714,7 +724,7 @@ public class DetailActivity extends AppActivity {
                 mBin.setError(null);
                 return true;
             }
-            mBin.setError("Bin code should be up to 10 characters");
+            mBin.setError(getString(R.string.bin_length));
             return false;
         }
     }
@@ -728,25 +738,25 @@ public class DetailActivity extends AppActivity {
                 mVendor.setError(null);
                 return true;
             }
-            mVendor.setError("Vendor code should be 9 digits");
+            mVendor.setError(getString(R.string.vendor_length));
             return false;
         }
     }
 
     private boolean validateQuantity(Editable s) {
         if (s == null || s.length() == 0) {
-            mQuantity.setError("Enter quantity");
+            mQuantity.setError(getString(R.string.quantity_empty));
             return false;
         } else {
             double q = Double.parseDouble(s.toString());
             if (q == 0.0) {
-                mQuantity.setError("Quantity cannot be zero");
+                mQuantity.setError(getString(R.string.quantity_zero));
                 return false;
             } else if (Math.round(q * 1000.0) < q * 1000.0) {
-                mQuantity.setError("Up to 3 decimals allowed");
+                mQuantity.setError(getString(R.string.quantity_decimals_length));
                 return false;
             } else if (Math.round(q / 10000000000.0) > 0) {
-                mQuantity.setError("Up to 10 integers allowed");
+                mQuantity.setError(getString(R.string.quantity_integers_length));
                 return false;
             } else {
                 return true;

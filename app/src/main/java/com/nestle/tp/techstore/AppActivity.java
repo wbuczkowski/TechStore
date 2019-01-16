@@ -112,8 +112,8 @@ public abstract class AppActivity extends AppCompatActivity implements LogoutTim
         }
         //if (useDataWedge) {
         else if (scanTech.equals(VALUE_PREF_SCAN_DATAWEDGE)) {
-            //Register for the intent to receiev the scanned data using intent callabck.
-            //The action and category name used must be same as the names usied in the profile creation.
+            //Register for the intent to receive the scanned data using intent callback.
+            //The action and category name used must be same as the names used in the profile creation.
             IntentFilter filter = new IntentFilter();
             filter.addAction(getPackageName() + ".SCAN");
             filter.addCategory(Intent.CATEGORY_DEFAULT);
