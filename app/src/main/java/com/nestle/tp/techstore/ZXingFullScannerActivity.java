@@ -158,11 +158,11 @@ public class ZXingFullScannerActivity extends AppCompatActivity implements
         finish();
     }
 
-    public void closeFormatsDialog() {
+    private void closeFormatsDialog() {
         closeDialog("format_selector");
     }
 
-    public void closeDialog(String dialogName) {
+    private void closeDialog(@SuppressWarnings("SameParameterValue") String dialogName) {
         FragmentManager fragmentManager = getSupportFragmentManager();
         DialogFragment fragment = (DialogFragment) fragmentManager.findFragmentByTag(dialogName);
         if(fragment != null) {
@@ -184,7 +184,7 @@ public class ZXingFullScannerActivity extends AppCompatActivity implements
         mScannerView.setAutoFocus(mAutoFocus);
     }
 
-    public void setupFormats() {
+    private void setupFormats() {
         List<BarcodeFormat> formats = new ArrayList<>();
         if(mSelectedIndices == null || mSelectedIndices.isEmpty()) {
             mSelectedIndices = new ArrayList<>();

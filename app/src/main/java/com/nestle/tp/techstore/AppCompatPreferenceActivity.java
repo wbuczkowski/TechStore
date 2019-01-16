@@ -34,13 +34,15 @@ public abstract class AppCompatPreferenceActivity extends PreferenceActivity {
         getDelegate().onPostCreate(savedInstanceState);
     }
 
-    public ActionBar getSupportActionBar() {
+    ActionBar getSupportActionBar() {
         return getDelegate().getSupportActionBar();
     }
 
-    public void setSupportActionBar(@Nullable Toolbar toolbar) {
-        getDelegate().setSupportActionBar(toolbar);
-    }
+// --Commented out by Inspection START (16/01/2019 13:39):
+//    public void setSupportActionBar(@Nullable Toolbar toolbar) {
+//        getDelegate().setSupportActionBar(toolbar);
+//    }
+// --Commented out by Inspection STOP (16/01/2019 13:39)
 
     @Override
     @NonNull

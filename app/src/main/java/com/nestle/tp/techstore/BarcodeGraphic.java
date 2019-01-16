@@ -39,8 +39,8 @@ public class BarcodeGraphic extends GraphicOverlay.Graphic {
 
     private static int mCurrentColorIndex = 0;
 
-    private Paint mRectPaint;
-    private Paint mTextPaint;
+    private final Paint mRectPaint;
+    private final Paint mTextPaint;
     private volatile Barcode mBarcode;
 
     BarcodeGraphic(GraphicOverlay overlay) {
@@ -59,6 +59,7 @@ public class BarcodeGraphic extends GraphicOverlay.Graphic {
         mTextPaint.setTextSize(36.0f);
     }
 
+    @SuppressWarnings("unused")
     public int getId() {
         return mId;
     }

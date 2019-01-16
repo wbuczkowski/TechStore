@@ -5,6 +5,7 @@ import android.app.Dialog;
 import android.content.DialogInterface;
 import android.hardware.Camera;
 import android.os.Bundle;
+import android.support.annotation.NonNull;
 import android.support.v4.app.DialogFragment;
 
 public class CameraSelectorDialogFragment extends DialogFragment {
@@ -27,6 +28,7 @@ public class CameraSelectorDialogFragment extends DialogFragment {
         return fragment;
     }
 
+    @NonNull
     @Override
     public Dialog onCreateDialog(Bundle savedInstanceState) {
         if(mListener == null) {

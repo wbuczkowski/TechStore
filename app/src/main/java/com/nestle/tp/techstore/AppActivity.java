@@ -20,7 +20,6 @@ import com.google.zxing.integration.android.IntentIntegrator;
 import com.google.zxing.integration.android.IntentResult;
 
 import java.util.List;
-import java.util.Objects;
 
 public abstract class AppActivity extends AppCompatActivity implements LogoutTimerUtility.LogOutListener {
 
@@ -39,11 +38,11 @@ public abstract class AppActivity extends AppCompatActivity implements LogoutTim
     static final String OPTION_GOODS_ISSUE = "1";
     static final String OPTION_GOODS_RETURN = "2";
     static final String OPTION_INVENTORY_WITH_DOCUMENT = "4";
-    final String OPTION_INVENTORY_WO_DOCUMENT = "3";
+    static final String OPTION_INVENTORY_WO_DOCUMENT = "3";
 
-    protected static final String ACTION = "com.symbol.datawedge.api.ACTION";
-    static final String SOFT_SCAN_TRIGGER = "com.symbol.datawedge.api.SOFT_SCAN_TRIGGER";
-    static final String START_SCANNING = "START_SCANNING";
+    private static final String ACTION = "com.symbol.datawedge.api.ACTION";
+    private static final String SOFT_SCAN_TRIGGER = "com.symbol.datawedge.api.SOFT_SCAN_TRIGGER";
+    private static final String START_SCANNING = "START_SCANNING";
 
     private static final int RC_BARCODE_CAPTURE_GOOGLE_VISION = 9001;
     private static final int RC_BARCODE_CAPTURE_ZBAR_LIB = 9002;
@@ -51,18 +50,21 @@ public abstract class AppActivity extends AppCompatActivity implements LogoutTim
 
     //    static final String KEY_PREF_USE_DATAWEDGE = "pref_use_datawedge";
 //    static final String KEY_PREF_USE_CAMERA = "pref_use_camera";
-    static final String KEY_PREF_USE_AUTO_FOCUS = "pref_use_auto_focus";
-    static final String KEY_PREF_USE_FLASH = "pref_use_flash";
+    private static final String KEY_PREF_USE_AUTO_FOCUS = "pref_use_auto_focus";
+    private static final String KEY_PREF_USE_FLASH = "pref_use_flash";
 
-    static final String KEY_PREF_TIMEOUT = "pref_timeout";
+    private static final String KEY_PREF_TIMEOUT = "pref_timeout";
 
-    static final String KEY_PREF_SCAN_TECHNOLOGY = "pref_scan_technology";
-    static final String KEY_PREF_SCAN_NONE = "";
-    static final String KEY_PREF_SCAN_DATAWEDGE = "DataWedge";
-    static final String KEY_PREF_SCAN_ZXING = "ZXing";
-    static final String KEY_PREF_SCAN_GOOGLEVISION = "GoogleVision";
-    static final String KEY_PREF_SCAN_ZBAR_LIB = "ZBarLib";
-    static final String KEY_PREF_SCAN_ZXING_LIB = "ZXingLib";
+    private static final String VALUE_PREF_TIMEOUT_DEFAULT = "300000";
+
+    private static final String KEY_PREF_SCAN_TECHNOLOGY = "pref_scan_technology";
+
+    private static final String VALUE_PREF_SCAN_NONE = "";
+    private static final String VALUE_PREF_SCAN_DATAWEDGE = "DataWedge";
+    private static final String VALUE_PREF_SCAN_ZXING = "ZXing";
+    private static final String VALUE_PREF_SCAN_GOOGLEVISION = "GoogleVision";
+    private static final String VALUE_PREF_SCAN_ZBAR_LIB = "ZBarLib";
+    private static final String VALUE_PREF_SCAN_ZXING_LIB = "ZXingLib";
 
     //    private boolean useDataWedge = false;
 //    private boolean useCamera = false;
@@ -90,8 +92,8 @@ public abstract class AppActivity extends AppCompatActivity implements LogoutTim
         // read preferences
         SharedPreferences sharedPref = PreferenceManager.getDefaultSharedPreferences(this);
         // useDataWedge = sharedPref.getBoolean(KEY_PREF_USE_DATAWEDGE, true);
-        scanTech = sharedPref.getString(KEY_PREF_SCAN_TECHNOLOGY, "");
-        if (Objects.equals(scanTech, KEY_PREF_SCAN_NONE)) {
+        scanTech = String.valueOf(sharedPref.getString(KEY_PREF_SCAN_TECHNOLOGY, VALUE_PREF_SCAN_NONE));
+        if (scanTech.equals(VALUE_PREF_SCAN_NONE)) {
             Snackbar.make(findViewById(R.id.fab),
                     "Please select scanning technology!", Snackbar.LENGTH_LONG)
                     .setAction(R.string.action_settings, new View.OnClickListener() {
@@ -109,18 +111,18 @@ public abstract class AppActivity extends AppCompatActivity implements LogoutTim
                     .show();
         }
         //if (useDataWedge) {
-        else if (scanTech.equals(KEY_PREF_SCAN_DATAWEDGE)) {
+        else if (scanTech.equals(VALUE_PREF_SCAN_DATAWEDGE)) {
             //Register for the intent to receiev the scanned data using intent callabck.
             //The action and category name used must be same as the names usied in the profile creation.
             IntentFilter filter = new IntentFilter();
-            filter.addAction("com.nestle.tp.techstore.ScanIntentOutputActivity");
-            filter.addCategory("android.intent.category.DEFAULT");
+            filter.addAction(getPackageName() + ".SCAN");
+            filter.addCategory(Intent.CATEGORY_DEFAULT);
             registerReceiver(broadcastReceiver, filter);
         }
 //        useCamera = sharedPref.getBoolean(KEY_PREF_USE_CAMERA, !useDataWedge);
         useAutoFocus = sharedPref.getBoolean(KEY_PREF_USE_AUTO_FOCUS, false);
         useFlash = sharedPref.getBoolean(KEY_PREF_USE_FLASH, false);
-        logoutTime = Integer.parseInt(Objects.requireNonNull(sharedPref.getString(KEY_PREF_TIMEOUT, "300000")));
+        logoutTime = Integer.parseInt(String.valueOf(sharedPref.getString(KEY_PREF_TIMEOUT, VALUE_PREF_TIMEOUT_DEFAULT)));
         LogoutTimerUtility.startLogoutTimer(this, this, logoutTime);
     }
 
@@ -128,7 +130,7 @@ public abstract class AppActivity extends AppCompatActivity implements LogoutTim
     protected void onPause() {
         super.onPause();
         //Unregister the intent reciever when the app goes to background.
-        if ( /*useDataWedge*/ scanTech.equals(KEY_PREF_SCAN_DATAWEDGE)) {
+        if ( /*useDataWedge*/ scanTech.equals(VALUE_PREF_SCAN_DATAWEDGE)) {
             unregisterReceiver(broadcastReceiver);
         }
         LogoutTimerUtility.stopLogoutTimer();
@@ -246,12 +248,12 @@ public abstract class AppActivity extends AppCompatActivity implements LogoutTim
         }
     }
 
-    public View.OnClickListener fabListener = new View.OnClickListener() {
+    final View.OnClickListener fabListener = new View.OnClickListener() {
         @Override
         public void onClick(View view) {
             Intent intent;
             switch (scanTech) {
-                case KEY_PREF_SCAN_DATAWEDGE:
+                case VALUE_PREF_SCAN_DATAWEDGE:
                     // start DataWedge soft-scanning
                     intent = new Intent();
                     intent.setAction(ACTION);
@@ -276,26 +278,26 @@ public abstract class AppActivity extends AppCompatActivity implements LogoutTim
                                 .show();
                     }
                     break;
-                case KEY_PREF_SCAN_ZXING:
+                case VALUE_PREF_SCAN_ZXING:
                     IntentIntegrator scanIntegrator = new IntentIntegrator(AppActivity.this);
                     scanIntegrator.initiateScan();
                     break;
-                case KEY_PREF_SCAN_GOOGLEVISION:
+                case VALUE_PREF_SCAN_GOOGLEVISION:
                     // launch barcode capture activity
                     intent = new Intent(AppActivity.this, BarcodeCaptureActivity.class);
                     intent.putExtra(BarcodeCaptureActivity.AutoFocus, useAutoFocus);
                     intent.putExtra(BarcodeCaptureActivity.UseFlash, useFlash);
                     startActivityForResult(intent, RC_BARCODE_CAPTURE_GOOGLE_VISION);
                     break;
-                case KEY_PREF_SCAN_ZBAR_LIB:
+                case VALUE_PREF_SCAN_ZBAR_LIB:
                     intent = new Intent(AppActivity.this, ZBarFullScannerActivity.class);
                     startActivityForResult(intent, RC_BARCODE_CAPTURE_ZBAR_LIB);
                     break;
-                case KEY_PREF_SCAN_ZXING_LIB:
+                case VALUE_PREF_SCAN_ZXING_LIB:
                     intent = new Intent(AppActivity.this, ZXingFullScannerActivity.class);
                     startActivityForResult(intent, RC_BARCODE_CAPTURE_ZXING_LIB);
                     break;
-                case KEY_PREF_SCAN_NONE:
+                case VALUE_PREF_SCAN_NONE:
                     Snackbar.make(view, "Please select scanning technology", Snackbar.LENGTH_LONG)
                             .setAction(R.string.action_settings, new View.OnClickListener() {
                                 @Override
@@ -328,7 +330,7 @@ public abstract class AppActivity extends AppCompatActivity implements LogoutTim
     }
 
     //Broadcast Receiver for receiving the intents back from DataWedge
-    private BroadcastReceiver broadcastReceiver = new BroadcastReceiver() {
+    private final BroadcastReceiver broadcastReceiver = new BroadcastReceiver() {
         final String LABEL_TYPE_TAG = "com.symbol.datawedge.label_type";
         final String DATA_STRING_TAG = "com.symbol.datawedge.data_string";
         //  final String DECODE_DATA_TAG = "com.symbol.datawedge.decode_data";
@@ -356,5 +358,5 @@ public abstract class AppActivity extends AppCompatActivity implements LogoutTim
         startActivity(new Intent(this, LoginActivity.class));
     }
 
-    abstract public void processBarcode(String data);
+    protected abstract void processBarcode(String data);
 }

@@ -52,7 +52,7 @@ public class GraphicOverlay<T extends GraphicOverlay.Graphic> extends View {
     private int mPreviewHeight;
     private float mHeightScaleFactor = 1.0f;
     private int mFacing = CameraSource.CAMERA_FACING_BACK;
-    private Set<T> mGraphics = new HashSet<>();
+    private final Set<T> mGraphics = new HashSet<>();
 
     /**
      * Base class for a custom graphics object to be rendered within the graphic overlay.  Subclass
@@ -60,9 +60,9 @@ public class GraphicOverlay<T extends GraphicOverlay.Graphic> extends View {
      * graphics element.  Add instances to the overlay using {@link GraphicOverlay#add(Graphic)}.
      */
     public static abstract class Graphic {
-        private GraphicOverlay mOverlay;
+        private final GraphicOverlay mOverlay;
 
-        public Graphic(GraphicOverlay overlay) {
+        protected Graphic(GraphicOverlay overlay) {
             mOverlay = overlay;
         }
 
@@ -78,20 +78,20 @@ public class GraphicOverlay<T extends GraphicOverlay.Graphic> extends View {
          *
          * @param canvas drawing canvas
          */
-        public abstract void draw(Canvas canvas);
+        protected abstract void draw(Canvas canvas);
 
         /**
          * Adjusts a horizontal value of the supplied value from the preview scale to the view
          * scale.
          */
-        public float scaleX(float horizontal) {
+        float scaleX(float horizontal) {
             return horizontal * mOverlay.mWidthScaleFactor;
         }
 
         /**
          * Adjusts a vertical value of the supplied value from the preview scale to the view scale.
          */
-        public float scaleY(float vertical) {
+        float scaleY(float vertical) {
             return vertical * mOverlay.mHeightScaleFactor;
         }
 

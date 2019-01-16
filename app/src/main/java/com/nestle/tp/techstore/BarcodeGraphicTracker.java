@@ -29,9 +29,9 @@ import com.google.android.gms.vision.barcode.Barcode;
  * to an overlay, update the graphics as the item changes, and remove the graphics when the item
  * goes away.
  */
-public class BarcodeGraphicTracker extends Tracker<Barcode> {
-    private GraphicOverlay<BarcodeGraphic> mOverlay;
-    private BarcodeGraphic mGraphic;
+class BarcodeGraphicTracker extends Tracker<Barcode> {
+    private final GraphicOverlay<BarcodeGraphic> mOverlay;
+    private final BarcodeGraphic mGraphic;
 
     private BarcodeUpdateListener mBarcodeUpdateListener;
 
@@ -40,8 +40,9 @@ public class BarcodeGraphicTracker extends Tracker<Barcode> {
      * BarcodeUpdateListener interface method onBarcodeDetected.
      */
     public interface BarcodeUpdateListener {
+        @SuppressWarnings("EmptyMethod")
         @UiThread
-        void onBarcodeDetected(Barcode barcode);
+        void onBarcodeDetected(@SuppressWarnings("unused") Barcode barcode);
     }
 
     BarcodeGraphicTracker(GraphicOverlay<BarcodeGraphic> mOverlay, BarcodeGraphic mGraphic,

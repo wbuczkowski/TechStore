@@ -221,7 +221,7 @@ public class DetailActivity extends AppActivity {
         }
     }
 
-    private TextWatcher WorkOrderWatcher = new TextWatcher() {
+    private final TextWatcher WorkOrderWatcher = new TextWatcher() {
         @Override
         public void beforeTextChanged(CharSequence s, int start, int count, int after) {
         }
@@ -433,7 +433,7 @@ public class DetailActivity extends AppActivity {
                 && validateQuantity(mQuantity.getText());
     }
 
-    private TextWatcher CostCenterWatcher = new TextWatcher() {
+    private final TextWatcher CostCenterWatcher = new TextWatcher() {
         @Override
         public void beforeTextChanged(CharSequence s, int start, int count, int after) {
         }
@@ -447,7 +447,7 @@ public class DetailActivity extends AppActivity {
             validateCostCenter(s);
         }
     };
-    private TextWatcher InventoryWatcher = new TextWatcher() {
+    private final TextWatcher InventoryWatcher = new TextWatcher() {
         @Override
         public void beforeTextChanged(CharSequence s, int start, int count, int after) {
 
@@ -463,7 +463,7 @@ public class DetailActivity extends AppActivity {
             validateInventory(s);
         }
     };
-    private TextWatcher MaterialWatcher = new TextWatcher() {
+    private final TextWatcher MaterialWatcher = new TextWatcher() {
         @Override
         public void beforeTextChanged(CharSequence s, int start, int count, int after) {
 
@@ -479,7 +479,7 @@ public class DetailActivity extends AppActivity {
             validateMaterial(s);
         }
     };
-    private TextWatcher PlantWatcher = new TextWatcher() {
+    private final TextWatcher PlantWatcher = new TextWatcher() {
         @Override
         public void beforeTextChanged(CharSequence s, int start, int count, int after) {
 
@@ -495,7 +495,7 @@ public class DetailActivity extends AppActivity {
             validatePlant(s);
         }
     };
-    private TextWatcher StorageLocationWatcher = new TextWatcher() {
+    private final TextWatcher StorageLocationWatcher = new TextWatcher() {
         @Override
         public void beforeTextChanged(CharSequence s, int start, int count, int after) {
 
@@ -511,7 +511,7 @@ public class DetailActivity extends AppActivity {
             validateStorageLocation(s);
         }
     };
-    private TextWatcher BinWatcher = new TextWatcher() {
+    private final TextWatcher BinWatcher = new TextWatcher() {
         @Override
         public void beforeTextChanged(CharSequence s, int start, int count, int after) {
 
@@ -527,7 +527,7 @@ public class DetailActivity extends AppActivity {
             validateBin(s);
         }
     };
-    private TextWatcher VendorWatcher = new TextWatcher() {
+    private final TextWatcher VendorWatcher = new TextWatcher() {
         @Override
         public void beforeTextChanged(CharSequence s, int start, int count, int after) {
 
@@ -543,7 +543,7 @@ public class DetailActivity extends AppActivity {
             validateVendor(s);
         }
     };
-    private TextWatcher QuantityWatcher = new TextWatcher() {
+    private final TextWatcher QuantityWatcher = new TextWatcher() {
         @Override
         public void beforeTextChanged(CharSequence s, int start, int count, int after) {
         }

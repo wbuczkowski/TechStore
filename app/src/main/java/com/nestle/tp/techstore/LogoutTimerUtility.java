@@ -9,7 +9,7 @@ import java.util.Timer;
 import java.util.TimerTask;
 import java.util.concurrent.ExecutionException;
 
-public class LogoutTimerUtility {
+class LogoutTimerUtility {
     public interface LogOutListener {
         void doLogout();
     }

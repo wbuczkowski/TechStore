@@ -21,7 +21,8 @@
         android:label="@string/app_name"
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
-        android:theme="@style/AppTheme">
+        android:theme="@style/AppTheme"
+        android:fullBackupContent="@xml/backup_descriptor">
         <meta-data
             android:name="com.google.android.gms.version"
             android:value="@integer/google_play_services_version" />
@@ -36,6 +37,17 @@
                 <action android:name="android.intent.action.MAIN" />
 
                 <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
+            <intent-filter>
+                <action android:name="android.intent.action.VIEW" />
+
+                <category android:name="android.intent.category.DEFAULT" />
+                <category android:name="android.intent.category.BROWSABLE" />
+
+                <data
+                    android:scheme="http"
+                    android:host="thenest-eur-hq.nestle.com"
+                    android:pathPrefix="/GL/GL_GCEN/TechnicalandProduction/Asset%20and%20Maintenance%20Management" />
             </intent-filter>
         </activity>
         <activity

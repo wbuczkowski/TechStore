@@ -4,6 +4,7 @@ import android.content.Intent;
 import android.content.SharedPreferences;
 import android.content.pm.PackageInfo;
 import android.content.pm.PackageManager;
+import android.net.Uri;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
 import android.support.annotation.NonNull;
@@ -23,12 +24,13 @@ public class LoginActivity extends AppActivity {
 //    static final String SOFT_SCAN_TRIGGER = "com.symbol.datawedge.api.SOFT_SCAN_TRIGGER";
 //    static final String START_SCANNING = "START_SCANNING";
 
-    static final String KEY_PREF_ENABLE_DATAWEDGE = "pref_enable_datawedge";
-    static final String KEY_PREF_USE_DATAWEDGE = "pref_use_datawedge";
-    static final String KEY_PREF_ENABLE_CAMERA = "pref_enable_camera";
-    static final String KEY_PREF_USE_CAMERA = "pref_use_camera";
+    private static final String KEY_PREF_ENABLE_DATAWEDGE = "pref_enable_datawedge";
+    private static final String KEY_PREF_USE_DATAWEDGE = "pref_use_datawedge";
+    private static final String KEY_PREF_ENABLE_CAMERA = "pref_enable_camera";
+    private static final String KEY_PREF_USE_CAMERA = "pref_use_camera";
 //    static final String KEY_PREF_USE_AUTO_FOCUS = "pref_use_auto_focus";
 //    static final String KEY_PREF_USE_FLASH = "pref_use_flash";
+    private static final String EXIT_STRING = "GETMEOUT";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -39,13 +41,17 @@ public class LoginActivity extends AppActivity {
         FloatingActionButton fab = findViewById(R.id.fab);
         fab.setOnClickListener(fabListener);
         Button buttonLogin = findViewById(R.id.buttonLogin);
-        buttonLogin.setOnClickListener(new View.OnClickListener(){
+        buttonLogin.setOnClickListener(new View.OnClickListener() {
             @Override
-            public void onClick(View view ){
+            public void onClick(View view) {
                 EditText editText = findViewById(R.id.editUserName);
                 String data = editText.getText().toString();
-                if (Character.isLetter(data.charAt(0)) && Character.isLetter(data.charAt(1))) {
-                    // first two characters are letters
+                if (data.matches("[a-zA-Z]{3}.*")) {
+                    // first three characters are letters
+                    if (data.equals(EXIT_STRING)) {
+                        finishAffinity();
+                        System.exit(0);
+                    }
                     Intent intent = new Intent(view.getContext(), MainActivity.class);
                     intent.putExtra(Intent.EXTRA_TEXT, data);
                     startActivity(intent);
@@ -69,6 +75,17 @@ public class LoginActivity extends AppActivity {
         editor.putString(EXTRA_STORAGE_LOCATION, "");
         editor.putString(EXTRA_VENDOR, "");
         editor.apply();
+        // ATTENTION: This was auto-generated to handle app links.
+        Intent appLinkIntent = getIntent();
+        String appLinkAction = appLinkIntent.getAction();
+        Uri appLinkData = appLinkIntent.getData();
+        //noinspection StatementWithEmptyBody
+        if (Intent.ACTION_VIEW.equals(appLinkAction) && appLinkData != null){
+            // TODO: get user id from URI
+            // String recipeId = appLinkData.getLastPathSegment();
+            // Uri appData = Uri.parse("content://com.recipe_app/recipe/").buildUpon().appendPath(recipeId).build();
+        }
+
     }
 
     @Override
@@ -116,7 +133,7 @@ public class LoginActivity extends AppActivity {
         }
     }
 
-    private static int compareVersion(@NonNull String v1, @NonNull String v2) {
+    private static int compareVersion(@NonNull String v1, @SuppressWarnings("SameParameterValue") @NonNull String v2) {
         List<String> l1 = new ArrayList<>(Arrays.asList(
                 v1.replaceAll("\\s", "").split("\\.")));
         List<String> l2 = new ArrayList<>(Arrays.asList(
@@ -155,7 +172,7 @@ public class LoginActivity extends AppActivity {
      * This code demonstrates how to create the DataWedge programatically and modify the settings.
      * This code can be skipped if the profile is created on the DataWedge manaually and pushed to different device though MDM
      */
-    public void createDataWedgeProfile() {
+    private void createDataWedgeProfile() {
         //Create profile if doesn't exit and update the required settings
         final String ACTION = "com.symbol.datawedge.api.ACTION";
         final String SET_CONFIG = "com.symbol.datawedge.api.SET_CONFIG";
@@ -224,7 +241,7 @@ public class LoginActivity extends AppActivity {
     @Override
     public void processBarcode(String data) {
         if (data.matches("[a-zA-Z]{3}.*")) {
-            if (data.equals("GETMEOUT")) {
+            if (data.equals(EXIT_STRING)) {
                 finishAffinity();
                 System.exit(0);
             }

@@ -31,7 +31,7 @@
         import android.util.Log;
         import android.view.Surface;
         import android.view.SurfaceHolder;
-        import android.view.SurfaceView;
+//        import android.view.SurfaceView;
         import android.view.WindowManager;
 
         import com.google.android.gms.common.images.Size;
@@ -70,12 +70,12 @@
          * <li>android.permissions.CAMERA</li>
          * </ul>
          */
-        @SuppressWarnings("deprecation")
+        //    @SuppressWarnings("deprecation")
         public class CameraSource {
-            @SuppressLint("InlinedApi")
+        //    @SuppressLint("InlinedApi")
             public static final int CAMERA_FACING_BACK = CameraInfo.CAMERA_FACING_BACK;
-            @SuppressLint("InlinedApi")
-            public static final int CAMERA_FACING_FRONT = CameraInfo.CAMERA_FACING_FRONT;
+        //    @SuppressLint("InlinedApi")
+            private static final int CAMERA_FACING_FRONT = CameraInfo.CAMERA_FACING_FRONT;
 
             private static final String TAG = "OpenCameraSource";
 
@@ -145,8 +145,8 @@
             // These instances need to be held onto to avoid GC of their underlying resources.  Even though
             // these aren't used outside of the method that creates them, they still must have hard
             // references maintained to them.
-            private SurfaceView mDummySurfaceView;
-            private SurfaceTexture mDummySurfaceTexture;
+            // private SurfaceView mDummySurfaceView;
+            // private SurfaceTexture mDummySurfaceTexture;
 
             /**
              * Dedicated thread and associated runnable for calling into the detector with frames, as the
@@ -160,7 +160,7 @@
              * buffer.  We use byte buffers internally because this is a more efficient way to call into
              * native code later (avoids a potential copy).
              */
-            private Map<byte[], ByteBuffer> mBytesToByteBuffer = new HashMap<>();
+            private final Map<byte[], ByteBuffer> mBytesToByteBuffer = new HashMap<>();
 
             //==============================================================================================
             // Builder
@@ -171,7 +171,7 @@
              */
             public static class Builder {
                 private final Detector<?> mDetector;
-                private CameraSource mCameraSource = new CameraSource();
+                private final CameraSource mCameraSource = new CameraSource();
 
                 /**
                  * Creates a camera source builder with the supplied context and detector.  Camera preview
@@ -258,7 +258,7 @@
             /**
              * Callback interface used to signal the moment of actual image capture.
              */
-            public interface ShutterCallback {
+            interface ShutterCallback {
                 /**
                  * Called as near as possible to the moment when a photo is captured from the sensor. This
                  * is a good opportunity to play a shutter sound or give other feedback of camera operation.
@@ -271,7 +271,7 @@
             /**
              * Callback interface used to supply image data from a photo capture.
              */
-            public interface PictureCallback {
+            interface PictureCallback {
                 /**
                  * Called when image data is available after a picture is taken.  The format of the data
                  * is a jpeg binary.
@@ -282,7 +282,7 @@
             /**
              * Callback interface used to notify on completion of camera auto focus.
              */
-            public interface AutoFocusCallback {
+            interface AutoFocusCallback {
                 /**
                  * Called when the camera auto focus completes.  If the camera
                  * does not support auto-focus and autoFocus is called,
@@ -305,7 +305,7 @@
              * Camera.Parameters#FOCUS_MODE_CONTINUOUS_PICTURE}. Applications can show
              * autofocus animation based on this.</p>
              */
-            public interface AutoFocusMoveCallback {
+            interface AutoFocusMoveCallback {
                 /**
                  * Called when the camera auto focus starts or stops.
                  *
@@ -349,13 +349,13 @@
 
                     // SurfaceTexture was introduced in Honeycomb (11), so if we are running and
                     // old version of Android. fall back to use SurfaceView.
-                    if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.HONEYCOMB) {
-                        mDummySurfaceTexture = new SurfaceTexture(DUMMY_TEXTURE_NAME);
-                        mCamera.setPreviewTexture(mDummySurfaceTexture);
-                    } else {
-                        mDummySurfaceView = new SurfaceView(mContext);
-                        mCamera.setPreviewDisplay(mDummySurfaceView.getHolder());
-                    }
+//                    if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.HONEYCOMB) {
+                    SurfaceTexture mDummySurfaceTexture = new SurfaceTexture(DUMMY_TEXTURE_NAME);
+                    mCamera.setPreviewTexture(mDummySurfaceTexture);
+//                    } else {
+//                        mDummySurfaceView = new SurfaceView(mContext);
+//                        mCamera.setPreviewDisplay(mDummySurfaceView.getHolder());
+//                    }
                     mCamera.startPreview();
 
                     mProcessingThread = new Thread(mFrameProcessor);
@@ -376,6 +376,7 @@
              * @param surfaceHolder the surface holder to use for the preview frames
              * @throws IOException if the supplied surface holder could not be used as the preview display
              */
+            @SuppressWarnings("UnusedReturnValue")
             @RequiresPermission(Manifest.permission.CAMERA)
             public CameraSource start(SurfaceHolder surfaceHolder) throws IOException {
                 synchronized (mCameraLock) {
@@ -438,12 +439,12 @@
                             // developer wants to display a preview we must use a SurfaceHolder.  If the developer doesn't
                             // want to display a preview we use a SurfaceTexture if we are running at least Honeycomb.
 
-                            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.HONEYCOMB) {
-                                mCamera.setPreviewTexture(null);
+//                            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.HONEYCOMB) {
+                            mCamera.setPreviewTexture(null);
 
-                            } else {
-                                mCamera.setPreviewDisplay(null);
-                            }
+//                            } else {
+//                                mCamera.setPreviewDisplay(null);
+//                            }
                         } catch (Exception e) {
                             Log.e(TAG, "Failed to clear camera preview: " + e);
                         }
@@ -468,6 +469,7 @@
                 return mFacing;
             }
 
+            @SuppressWarnings("UnusedReturnValue")
             public int doZoom(float scale) {
                 synchronized (mCameraLock) {
                     if (mCamera == null) {
@@ -658,11 +660,12 @@
              * @param cb the callback to run
              * @return {@code true} if the operation is supported (i.e. from Jelly Bean), {@code false} otherwise
              */
+            @SuppressWarnings("SameReturnValue")
             @TargetApi(Build.VERSION_CODES.JELLY_BEAN)
             public boolean setAutoFocusMoveCallback(@Nullable AutoFocusMoveCallback cb) {
-                if (Build.VERSION.SDK_INT < Build.VERSION_CODES.JELLY_BEAN) {
-                    return false;
-                }
+//                if (Build.VERSION.SDK_INT < Build.VERSION_CODES.JELLY_BEAN) {
+//                    return false;
+//                }
 
                 synchronized (mCameraLock) {
                     if (mCamera != null) {
@@ -891,18 +894,18 @@
              * size is null, then there is no picture size with the same aspect ratio as the preview size.
              */
             private static class SizePair {
-                private Size mPreview;
+                private final Size mPreview;
                 private Size mPicture;
 
-                public SizePair(android.hardware.Camera.Size previewSize,
-                                android.hardware.Camera.Size pictureSize) {
+                SizePair(android.hardware.Camera.Size previewSize,
+                         android.hardware.Camera.Size pictureSize) {
                     mPreview = new Size(previewSize.width, previewSize.height);
                     if (pictureSize != null) {
                         mPicture = new Size(pictureSize.width, pictureSize.height);
                     }
                 }
 
-                public Size previewSize() {
+                Size previewSize() {
                     return mPreview;
                 }
 
@@ -1094,7 +1097,7 @@
              */
             private class FrameProcessingRunnable implements Runnable {
                 private Detector<?> mDetector;
-                private long mStartTimeMillis = SystemClock.elapsedRealtime();
+                private final long mStartTimeMillis = SystemClock.elapsedRealtime();
 
                 // This lock guards all of the member variables below.
                 private final Object mLock = new Object();

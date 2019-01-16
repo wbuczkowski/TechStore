@@ -189,11 +189,11 @@ public class ZBarFullScannerActivity extends AppCompatActivity implements
         }
     }
 
-    public void closeFormatsDialog() {
+    private void closeFormatsDialog() {
         closeDialog("format_selector");
     }
 
-    public void closeDialog(String dialogName) {
+    private void closeDialog(@SuppressWarnings("SameParameterValue") String dialogName) {
         FragmentManager fragmentManager = getSupportFragmentManager();
         DialogFragment fragment = (DialogFragment) fragmentManager.findFragmentByTag(dialogName);
         if(fragment != null) {
