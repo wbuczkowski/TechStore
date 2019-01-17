@@ -14,8 +14,8 @@ import android.support.v7.app.AppCompatActivity;
 import android.view.MenuItem;
 import android.view.View;
 
-import com.google.android.gms.common.api.CommonStatusCodes;
-import com.google.android.gms.vision.barcode.Barcode;
+//import com.google.android.gms.common.api.CommonStatusCodes;
+//import com.google.android.gms.vision.barcode.Barcode;
 import com.google.zxing.integration.android.IntentIntegrator;
 import com.google.zxing.integration.android.IntentResult;
 
@@ -44,14 +44,14 @@ public abstract class AppActivity extends AppCompatActivity implements LogoutTim
     private static final String SOFT_SCAN_TRIGGER = "com.symbol.datawedge.api.SOFT_SCAN_TRIGGER";
     private static final String START_SCANNING = "START_SCANNING";
 
-    private static final int RC_BARCODE_CAPTURE_GOOGLE_VISION = 9001;
-    private static final int RC_BARCODE_CAPTURE_ZBAR_LIB = 9002;
-    private static final int RC_BARCODE_CAPTURE_ZXING_LIB = 9003;
+//    private static final int RC_BARCODE_CAPTURE_GOOGLE_VISION = 9001;
+    private static final int RC_BARCODE_CAPTURE_ZBAR_LIB = 9001;
+    private static final int RC_BARCODE_CAPTURE_ZXING_LIB = 9002;
 
     //    static final String KEY_PREF_USE_DATAWEDGE = "pref_use_datawedge";
 //    static final String KEY_PREF_USE_CAMERA = "pref_use_camera";
-    private static final String KEY_PREF_USE_AUTO_FOCUS = "pref_use_auto_focus";
-    private static final String KEY_PREF_USE_FLASH = "pref_use_flash";
+//    private static final String KEY_PREF_USE_AUTO_FOCUS = "pref_use_auto_focus";
+//    private static final String KEY_PREF_USE_FLASH = "pref_use_flash";
 
     private static final String KEY_PREF_TIMEOUT = "pref_timeout";
 
@@ -62,14 +62,14 @@ public abstract class AppActivity extends AppCompatActivity implements LogoutTim
     private static final String VALUE_PREF_SCAN_NONE = "";
     private static final String VALUE_PREF_SCAN_DATAWEDGE = "DataWedge";
     private static final String VALUE_PREF_SCAN_ZXING = "ZXing";
-    private static final String VALUE_PREF_SCAN_GOOGLEVISION = "GoogleVision";
+//    private static final String VALUE_PREF_SCAN_GOOGLEVISION = "GoogleVision";
     private static final String VALUE_PREF_SCAN_ZBAR_LIB = "ZBarLib";
     private static final String VALUE_PREF_SCAN_ZXING_LIB = "ZXingLib";
 
     //    private boolean useDataWedge = false;
 //    private boolean useCamera = false;
-    private boolean useAutoFocus = false;
-    private boolean useFlash = false;
+//    private boolean useAutoFocus = false;
+//    private boolean useFlash = false;
     private int logoutTime = 300000;
 
     private String scanTech;
@@ -120,8 +120,8 @@ public abstract class AppActivity extends AppCompatActivity implements LogoutTim
             registerReceiver(broadcastReceiver, filter);
         }
 //        useCamera = sharedPref.getBoolean(KEY_PREF_USE_CAMERA, !useDataWedge);
-        useAutoFocus = sharedPref.getBoolean(KEY_PREF_USE_AUTO_FOCUS, false);
-        useFlash = sharedPref.getBoolean(KEY_PREF_USE_FLASH, false);
+//        useAutoFocus = sharedPref.getBoolean(KEY_PREF_USE_AUTO_FOCUS, false);
+//        useFlash = sharedPref.getBoolean(KEY_PREF_USE_FLASH, false);
         logoutTime = Integer.parseInt(String.valueOf(sharedPref.getString(KEY_PREF_TIMEOUT, VALUE_PREF_TIMEOUT_DEFAULT)));
         LogoutTimerUtility.startLogoutTimer(this, this, logoutTime);
     }
@@ -180,28 +180,28 @@ public abstract class AppActivity extends AppCompatActivity implements LogoutTim
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent intent) {
         switch (requestCode) {
-            case RC_BARCODE_CAPTURE_GOOGLE_VISION:
-                //Google Vision
-                if (resultCode == CommonStatusCodes.SUCCESS) {
-                    if (intent != null) {
-                        Barcode barcode = intent.getParcelableExtra(BarcodeCaptureActivity.BarcodeObject);
-//                        Snackbar.make(findViewById(R.id.fab),
-//                                R.string.barcode_success + "\n" + barcode.displayValue,
+//            case RC_BARCODE_CAPTURE_GOOGLE_VISION:
+//                //Google Vision
+//                if (resultCode == CommonStatusCodes.SUCCESS) {
+//                    if (intent != null) {
+//                        Barcode barcode = intent.getParcelableExtra(BarcodeCaptureActivity.BarcodeObject);
+////                        Snackbar.make(findViewById(R.id.fab),
+////                                R.string.barcode_success + "\n" + barcode.displayValue,
+////                                Snackbar.LENGTH_LONG).show();
+//                        processBarcode(barcode.displayValue);
+//                    } else {
+//                        Snackbar.make(findViewById(R.id.fab), R.string.barcode_failure,
 //                                Snackbar.LENGTH_LONG).show();
-                        processBarcode(barcode.displayValue);
-                    } else {
-                        Snackbar.make(findViewById(R.id.fab), R.string.barcode_failure,
-                                Snackbar.LENGTH_LONG).show();
-                    }
-                } else {
-                    Snackbar.make(findViewById(R.id.fab), String.format(getString(R.string.barcode_error),
-                            CommonStatusCodes.getStatusCodeString(resultCode)),
-                            Snackbar.LENGTH_LONG).show();
-                }
-                break;
+//                    }
+//                } else {
+//                    Snackbar.make(findViewById(R.id.fab), String.format(getString(R.string.barcode_error),
+//                            CommonStatusCodes.getStatusCodeString(resultCode)),
+//                            Snackbar.LENGTH_LONG).show();
+//                }
+//                break;
             case RC_BARCODE_CAPTURE_ZBAR_LIB:
             case RC_BARCODE_CAPTURE_ZXING_LIB:
-                if (resultCode == CommonStatusCodes.SUCCESS) {
+                if (resultCode == RESULT_OK) {
                     if (intent != null) {
                         String barcode = intent.getStringExtra("Contents");
 //                        Snackbar.make(findViewById(R.id.fab),
@@ -213,15 +213,14 @@ public abstract class AppActivity extends AppCompatActivity implements LogoutTim
                                 Snackbar.LENGTH_LONG).show();
                     }
                 } else {
-                    Snackbar.make(findViewById(R.id.fab), String.format(getString(R.string.barcode_error),
-                            CommonStatusCodes.getStatusCodeString(resultCode)),
+                    Snackbar.make(findViewById(R.id.fab),
+                            getString(R.string.barcode_error),
                             Snackbar.LENGTH_LONG).show();
                 }
                 break;
             case IntentIntegrator.REQUEST_CODE:
                 //ZXing
-                if (resultCode == CommonStatusCodes.SUCCESS
-                        || resultCode == CommonStatusCodes.SUCCESS_CACHE) {
+                if (resultCode == RESULT_OK) {
                     if (intent != null) {
                         //retrieve scan result
                         IntentResult scanningResult =
@@ -238,8 +237,8 @@ public abstract class AppActivity extends AppCompatActivity implements LogoutTim
                                 Snackbar.LENGTH_LONG).show();
                     }
                 } else {
-                    Snackbar.make(findViewById(R.id.fab), String.format(getString(R.string.barcode_error),
-                            CommonStatusCodes.getStatusCodeString(resultCode)),
+                    Snackbar.make(findViewById(R.id.fab),
+                            getString(R.string.barcode_error),
                             Snackbar.LENGTH_LONG).show();
                 }
                 break;
@@ -282,13 +281,13 @@ public abstract class AppActivity extends AppCompatActivity implements LogoutTim
                     IntentIntegrator scanIntegrator = new IntentIntegrator(AppActivity.this);
                     scanIntegrator.initiateScan();
                     break;
-                case VALUE_PREF_SCAN_GOOGLEVISION:
-                    // launch barcode capture activity
-                    intent = new Intent(AppActivity.this, BarcodeCaptureActivity.class);
-                    intent.putExtra(BarcodeCaptureActivity.AutoFocus, useAutoFocus);
-                    intent.putExtra(BarcodeCaptureActivity.UseFlash, useFlash);
-                    startActivityForResult(intent, RC_BARCODE_CAPTURE_GOOGLE_VISION);
-                    break;
+//                case VALUE_PREF_SCAN_GOOGLEVISION:
+//                    // launch barcode capture activity
+//                    intent = new Intent(AppActivity.this, BarcodeCaptureActivity.class);
+//                    intent.putExtra(BarcodeCaptureActivity.AutoFocus, useAutoFocus);
+//                    intent.putExtra(BarcodeCaptureActivity.UseFlash, useFlash);
+//                    startActivityForResult(intent, RC_BARCODE_CAPTURE_GOOGLE_VISION);
+//                    break;
                 case VALUE_PREF_SCAN_ZBAR_LIB:
                     intent = new Intent(AppActivity.this, ZBarFullScannerActivity.class);
                     startActivityForResult(intent, RC_BARCODE_CAPTURE_ZBAR_LIB);

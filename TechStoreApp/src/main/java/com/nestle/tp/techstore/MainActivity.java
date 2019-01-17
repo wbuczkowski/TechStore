@@ -13,7 +13,7 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
 
-import com.google.android.gms.common.api.CommonStatusCodes;
+//import com.google.android.gms.common.api.CommonStatusCodes;
 
 import java.io.BufferedInputStream;
 import java.io.BufferedWriter;
@@ -211,7 +211,7 @@ public class MainActivity extends AppActivity implements View.OnClickListener {
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         switch (requestCode) {
             case RC_GET_DATA:
-                if (resultCode == CommonStatusCodes.SUCCESS) {
+                if (resultCode == RESULT_OK) {
                     Snackbar.make(findViewById(R.id.fab),
                             R.string.success,
                             Snackbar.LENGTH_LONG).show();

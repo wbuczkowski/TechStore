@@ -10,7 +10,7 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.view.ViewGroup;
 
-import com.google.android.gms.common.api.CommonStatusCodes;
+//import com.google.android.gms.common.api.CommonStatusCodes;
 import com.google.zxing.BarcodeFormat;
 import com.google.zxing.Result;
 
@@ -154,7 +154,7 @@ public class ZXingFullScannerActivity extends AppCompatActivity implements
         Intent data = new Intent();
         data.putExtra("Contents", rawResult.getText());
         data.putExtra("Format", rawResult.getBarcodeFormat().toString());
-        setResult(CommonStatusCodes.SUCCESS, data);
+        setResult(RESULT_OK, data);
         finish();
     }
 

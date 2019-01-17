@@ -17,7 +17,7 @@ import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.TextView;
 
-import com.google.android.gms.common.api.CommonStatusCodes;
+//import com.google.android.gms.common.api.CommonStatusCodes;
 
 import java.text.SimpleDateFormat;
 import java.util.Date;
@@ -261,7 +261,7 @@ public class DetailActivity extends AppActivity {
                     data.putExtra(EXTRA_DATE, ft.format(new Date()));
                     data.putExtra(EXTRA_INVENTORY, mInventory.getText().toString());
                     data.putExtra(EXTRA_VENDOR, mVendor.getText().toString());
-                    setResult(CommonStatusCodes.SUCCESS, data);
+                    setResult(RESULT_OK, data);
                     // save data for next use
                     SharedPreferences sharedPref = getPreferences(MODE_PRIVATE);
                     SharedPreferences.Editor editor = sharedPref.edit();
