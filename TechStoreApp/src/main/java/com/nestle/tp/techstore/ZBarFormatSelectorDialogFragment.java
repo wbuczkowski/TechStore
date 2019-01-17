@@ -70,7 +70,7 @@ public class ZBarFormatSelectorDialogFragment extends DialogFragment {
                             }
                         })
                 // Set the action buttons
-                .setPositiveButton(R.string.ok_button, new DialogInterface.OnClickListener() {
+                .setPositiveButton(android.R.string.ok, new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialog, int id) {
                         // User clicked OK, so save the mSelectedIndices results somewhere
@@ -80,7 +80,7 @@ public class ZBarFormatSelectorDialogFragment extends DialogFragment {
                         }
                     }
                 })
-                .setNegativeButton(R.string.cancel_button, new DialogInterface.OnClickListener() {
+                .setNegativeButton(android.R.string.cancel, new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialog, int id) {
                     }
