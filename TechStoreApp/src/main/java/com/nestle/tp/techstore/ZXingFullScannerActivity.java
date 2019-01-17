@@ -10,7 +10,6 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.view.ViewGroup;
 
-//import com.google.android.gms.common.api.CommonStatusCodes;
 import com.google.zxing.BarcodeFormat;
 import com.google.zxing.Result;
 

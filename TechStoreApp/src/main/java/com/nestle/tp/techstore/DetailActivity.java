@@ -17,8 +17,6 @@ import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.TextView;
 
-//import com.google.android.gms.common.api.CommonStatusCodes;
-
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.Locale;

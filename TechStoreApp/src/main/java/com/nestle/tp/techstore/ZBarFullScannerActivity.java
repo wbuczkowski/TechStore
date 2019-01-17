@@ -10,8 +10,6 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.view.ViewGroup;
 
-//import com.google.android.gms.common.api.CommonStatusCodes;
-
 import java.util.ArrayList;
 import java.util.List;
 

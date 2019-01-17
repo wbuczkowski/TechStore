@@ -13,8 +13,6 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
 
-//import com.google.android.gms.common.api.CommonStatusCodes;
-
 import java.io.BufferedInputStream;
 import java.io.BufferedWriter;
 import java.io.File;
