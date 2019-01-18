@@ -17,19 +17,26 @@
 
     <application
         android:allowBackup="true"
+        android:fullBackupContent="@xml/backup_descriptor"
         android:icon="@mipmap/ic_launcher"
         android:label="@string/app_name"
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
-        android:theme="@style/AppTheme"
-        android:fullBackupContent="@xml/backup_descriptor">
-        <!--<meta-data-->
-            <!--android:name="com.google.android.gms.version"-->
-            <!--android:value="@integer/google_play_services_version" />-->
-        <!--<meta-data-->
-            <!--android:name="com.google.android.gms.vision.DEPENDENCIES"-->
-            <!--android:value="barcode" />-->
-
+        android:theme="@style/AppTheme">
+        <activity
+            android:name=".ResultsActivity"
+            android:label="Results"
+            android:parentActivityName=".MainActivity">
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value=".MainActivity" />
+        </activity>
+        <!-- <meta-data -->
+        <!-- android:name="com.google.android.gms.version" -->
+        <!-- android:value="@integer/google_play_services_version" /> -->
+        <!-- <meta-data -->
+        <!-- android:name="com.google.android.gms.vision.DEPENDENCIES" -->
+        <!-- android:value="barcode" /> -->
         <activity
             android:name=".LoginActivity"
             android:label="@string/app_name">
@@ -45,9 +52,9 @@
                 <category android:name="android.intent.category.BROWSABLE" />
 
                 <data
-                    android:scheme="http"
                     android:host="thenest-eur-hq.nestle.com"
-                    android:pathPrefix="/GL/GL_GCEN/TechnicalandProduction/Asset%20and%20Maintenance%20Management" />
+                    android:pathPrefix="/GL/GL_GCEN/TechnicalandProduction/Asset%20and%20Maintenance%20Management"
+                    android:scheme="http" />
             </intent-filter>
         </activity>
         <activity
@@ -60,10 +67,9 @@
         </activity>
         <activity
             android:name=".SettingsActivity"
-            android:label="@string/title_activity_settings" />
-        <!--<activity-->
-            <!--android:name=".BarcodeCaptureActivity"-->
-            <!--android:label="@string/title_activity_barcode_capture" />-->
+            android:label="@string/title_activity_settings" /> <!-- <activity -->
+        <!-- android:name=".BarcodeCaptureActivity" -->
+        <!-- android:label="@string/title_activity_barcode_capture" /> -->
         <activity
             android:name=".DetailActivity"
             android:label="@string/title_activity_detail"

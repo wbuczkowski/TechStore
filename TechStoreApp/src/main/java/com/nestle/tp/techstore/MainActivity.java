@@ -172,7 +172,9 @@ public class MainActivity extends AppActivity implements View.OnClickListener {
                 startActivityForResult(intent, RC_GET_DATA);
                 break;
             case R.id.button_display:
-                // TODO display activity
+                intent = new Intent(this, ResultsActivity.class);
+                startActivity(intent);
+                break;
         }
     }
 
@@ -379,7 +381,6 @@ public class MainActivity extends AppActivity implements View.OnClickListener {
             }
         } else {
             // write spacer
-            // TODO: check if needed
             dataLine = dataLine.concat("\t");
         }
         // write vendor
@@ -387,6 +388,9 @@ public class MainActivity extends AppActivity implements View.OnClickListener {
         if (data != null && !data.isEmpty()) {
             // write vendor
             dataLine = dataLine.concat("\t" + data);
+        } else {
+            // write spacer
+            dataLine = dataLine.concat("\t");
         }
 
         // success: write end of line

@@ -61,4 +61,24 @@
     <string name="formats">Formats</string>
     <string name="choose_formats">Choose Formats</string>
     <string name="select_camera">Select a Camera</string>
+    <string-array name="results_headers">
+        <item>Option</item>
+        <item>WO/CC</item>
+        <item>Material</item>
+        <item>Plant</item>
+        <item>S.Loc.</item>
+        <item>Bin</item>
+        <item>Quantity</item>
+        <item>User</item>
+        <item>Date/Time</item>
+        <item>Inventory</item>
+        <item>Vendor</item>
+    </string-array>
+    <string-array name="pref_timeout_titles">
+        <item>1 Minute</item>
+        <item>2 Minuten</item>
+        <item>3 Minuten</item>
+        <item>5 Minuten</item>
+        <item>10 Minuten</item>
+    </string-array>
 </resources>

@@ -13,7 +13,7 @@
     <!--<string name="permission_camera_rationale">Access to the camera is needed for detection</string>-->
     <!--<string name="no_camera_permission">This application cannot run because it does not have the camera permission. The application will now exit.</string>-->
     <!--<string name="low_storage_error">Face detector dependencies cannot be downloaded due to low device storage</string>-->
-<!--
+    <!--
     <string name="barcode_header">Click "Read Barcode" to read a barcode</string>
     <string name="read_barcode">Read Barcode</string>
     <string name="auto_focus">Auto Focus</string>
@@ -108,6 +108,20 @@
     <string name="text_inventory">Inventory Document</string>
     <string name="text_vendor">Vendor</string>
     <string name="text_quantity">Quantity in BUoM</string>
+
+    <string-array name="results_headers">
+        <item>Option</item>
+        <item>WO/CC</item>
+        <item>Material</item>
+        <item>Plant</item>
+        <item>S.Loc.</item>
+        <item>Bin</item>
+        <item>Quantity</item>
+        <item>User</item>
+        <item>Date/Time</item>
+        <item>Inventory</item>
+        <item>Vendor</item>
+    </string-array>
 
     <string name="user_name">User Name</string>
     <string name="login">Log In</string>
