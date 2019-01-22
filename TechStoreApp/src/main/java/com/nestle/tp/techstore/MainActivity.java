@@ -23,6 +23,7 @@ import java.io.IOException;
 public class MainActivity extends AppActivity implements View.OnClickListener {
 
     private static final int RC_GET_DATA = 9101;
+    private static final String STATE_USERNAME = "userName";
 
     private String mUserName;
     private TextView mStatus;
@@ -45,9 +46,22 @@ public class MainActivity extends AppActivity implements View.OnClickListener {
         button.setOnClickListener(this);
         button = findViewById(R.id.button_display);
         button.setOnClickListener(this);
-        mUserName = getIntent().getStringExtra(Intent.EXTRA_TEXT);
+        if (savedInstanceState != null) {
+            mUserName = savedInstanceState.getString(STATE_USERNAME);
+        } else {
+            mUserName = getIntent().getStringExtra(Intent.EXTRA_TEXT);
+        }
         mStatus = findViewById(R.id.text_status);
         setStatusText();
+    }
+
+    @Override
+    public void onSaveInstanceState(Bundle savedInstanceState) {
+        // Save the user name
+        savedInstanceState.putString(STATE_USERNAME, mUserName);
+
+        // Always call the superclass so it can save the view hierarchy state
+        super.onSaveInstanceState(savedInstanceState);
     }
 
     @Override
