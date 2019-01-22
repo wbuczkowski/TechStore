@@ -5,6 +5,7 @@ import android.os.Bundle;
 import android.os.Environment;
 import android.support.design.widget.Snackbar;
 import android.support.v4.content.ContextCompat;
+import android.support.v7.app.ActionBar;
 import android.view.ViewTreeObserver;
 import android.widget.TableLayout;
 import android.widget.TableRow;
@@ -23,6 +24,8 @@ public class ResultsActivity extends AppActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_results);
+        ActionBar actionBar = getSupportActionBar();
+        if (actionBar != null) actionBar.setDisplayHomeAsUpEnabled(true);
 
         final TableLayout tl = findViewById(R.id.tablelayout_contents);
         TableRow tr;
