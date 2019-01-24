@@ -747,13 +747,14 @@ public class DetailActivity extends AppActivity {
             return false;
         } else {
             double q = Double.parseDouble(s.toString());
+
             if (q == 0.0) {
                 mQuantity.setError(getString(R.string.quantity_zero));
                 return false;
-            } else if (Math.round(q * 1000.0) < q * 1000.0) {
+            } else if (Math.floor(q * 1000.0) < q * 1000.0) {
                 mQuantity.setError(getString(R.string.quantity_decimals_length));
                 return false;
-            } else if (Math.round(q / 10000000000.0) > 0) {
+            } else if (Math.floor(q / 10000000000.0) > 0) {
                 mQuantity.setError(getString(R.string.quantity_integers_length));
                 return false;
             } else {
