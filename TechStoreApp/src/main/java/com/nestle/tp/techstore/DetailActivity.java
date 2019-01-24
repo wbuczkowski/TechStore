@@ -747,7 +747,6 @@ public class DetailActivity extends AppActivity {
             return false;
         } else {
             double q = Double.parseDouble(s.toString());
-
             if (q == 0.0) {
                 mQuantity.setError(getString(R.string.quantity_zero));
                 return false;
