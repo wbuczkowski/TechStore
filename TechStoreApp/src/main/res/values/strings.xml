@@ -1,35 +1,19 @@
 <resources>
     <string name="app_name" translatable="false">TechStore</string>
-    <string name="login_prompt" translatable="false">Please scan your user ID</string>
-    <string name="login_error" translatable="false">Incorrect user ID!</string>
-
-    <!--<string name="title_activity_main">MainActivity</string>-->
+    <string name="login_prompt">Please scan your user ID</string>
+    <string name="login_error">Incorrect user ID!</string>
     <string name="title_activity_detail" translatable="false">DetailActivity</string>
     <string name="title_activity_settings">Settings</string>
-    <!--<string name="title_activity_barcode_capture">Barcode Capture</string>-->
     <string name="title_activity_zbar">ZBar Scanner</string>
     <string name="title_activity_zxing">ZXing Scanner</string>
-
-    <!--<string name="permission_camera_rationale">Access to the camera is needed for detection</string>-->
-    <!--<string name="no_camera_permission">This application cannot run because it does not have the camera permission. The application will now exit.</string>-->
-    <!--<string name="low_storage_error">Face detector dependencies cannot be downloaded due to low device storage</string>-->
-    <!--
-    <string name="barcode_header">Click "Read Barcode" to read a barcode</string>
-    <string name="read_barcode">Read Barcode</string>
-    <string name="auto_focus">Auto Focus</string>
-    <string name="use_flash">Use Flash</string>
-    <string name="toggle_flash">Flash</string>
--->
     <string name="barcode_success">Barcode read successfully</string>
     <string name="barcode_failure">No barcode captured</string>
     <string name="barcode_error">"Error reading barcode"</string>
     <string name="barcode_unknown">"Error interpreting barcode"</string>
-
     <string name="activity_goods_issue">Goods Issue</string>
     <string name="activity_goods_return">Goods Return</string>
     <string name="activity_inventory">Stock Counting</string>
     <string name="activity_display">Display Results</string>
-
     <string name="text_status">Records:\t</string>
     <string name="file_name" translatable="false">scandata.txt</string>
     <string name="directory_error">Directory not created</string>
@@ -37,11 +21,9 @@
     <string name="storage_error">External storage not writable</string>
     <string name="success">Success</string>
     <string name="cancelled">Cancelled</string>
-
     <string name="action_save">Save</string>
     <string name="action_switch">Switch</string>
-    <string name="save_failure">Please complete data entry</string>
-
+    <string name="save_error">Please complete data entry</string>
     <string name="work_order_empty">Enter either Work Order or Cost Center</string>
     <string name="work_order_length">Work Order should be 10 digits</string>
     <string name="cost_center_length">Cost Center should be 7 to 10 characters</string>
@@ -58,25 +40,18 @@
     <string name="quantity_zero">Quantity cannot be zero</string>
     <string name="quantity_decimals_length">Up to 3 decimals allowed</string>
     <string name="quantity_integers_length">Up to 10 integers allowed</string>
-
     <string name="action_settings">Settings</string>
-
-    <!-- Strings related to Settings -->
-
     <string name="pref_header_scanner">Scanner</string>
-
     <string name="pref_scan_technology_title">Scanning Technology</string>
     <string-array name="pref_scan_technology_titles">
         <item>DataWedge App</item>
         <item>ZXing App</item>
-        <!--<item>Google Vision Library</item>-->
         <item>ZBar Library</item>
         <item>ZXing Library</item>
     </string-array>
     <string-array name="pref_scan_technology_values">
         <item>DataWedge</item>
         <item>ZXing</item>
-        <!--<item>GoogleVision</item>-->
         <item>ZBarLib</item>
         <item>ZXingLib</item>
     </string-array>
@@ -98,7 +73,6 @@
     </string-array>
     <string name="pref_not_selected">Not selected</string>
     <string name="pref_ringtone_silent">Silent</string>
-
     <string name="text_work_order">Work Order</string>
     <string name="text_cost_center">Cost Center</string>
     <string name="text_material">Material</string>
@@ -108,7 +82,6 @@
     <string name="text_inventory">Inventory Document</string>
     <string name="text_vendor">Vendor</string>
     <string name="text_quantity">Quantity in BUoM</string>
-
     <string-array name="results_headers">
         <item>Option</item>
         <item>WO/CC</item>
@@ -122,10 +95,8 @@
         <item>Inventory</item>
         <item>Vendor</item>
     </string-array>
-
     <string name="user_name">User Name</string>
     <string name="login">Log In</string>
-
     <string name="flash_on">Flash [ON]</string>
     <string name="flash_off">Flash [OFF]</string>
     <string name="auto_focus_on">Auto Focus [ON]</string>
@@ -133,7 +104,4 @@
     <string name="formats">Formats</string>
     <string name="choose_formats">Choose Formats</string>
     <string name="select_camera">Select a Camera</string>
-    <!--<string name="ok_button">OK</string>-->
-    <!--<string name="cancel_button">Cancel</string>-->
-
 </resources>

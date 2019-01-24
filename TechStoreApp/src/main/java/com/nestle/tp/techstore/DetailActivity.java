@@ -274,7 +274,7 @@ public class DetailActivity extends AppActivity {
                     finish();
                 } else {
                     Snackbar.make(findViewById(R.id.fab),
-                            R.string.save_failure,
+                            R.string.save_error,
                             Snackbar.LENGTH_LONG).show();
                 }
                 return true;
