@@ -22,6 +22,15 @@
     -->
     <include layout="@layout/content_main" />
 
+    <ImageView
+        android:id="@+id/imageView"
+        android:layout_width="191dp"
+        android:layout_height="48dp"
+        android:layout_gravity="bottom|start"
+        android:layout_margin="@dimen/fab_margin"
+        android:contentDescription="@string/app_name"
+        app:srcCompat="@drawable/logo_grey" />
+
     <android.support.design.widget.FloatingActionButton
         android:id="@+id/fab"
         android:layout_width="wrap_content"
@@ -29,6 +38,6 @@
         android:layout_gravity="bottom|end"
         android:layout_margin="@dimen/fab_margin"
         app:fabSize="normal"
-        app:srcCompat="@drawable/ic_supermarket_barcode" />
+        app:srcCompat="@drawable/ic_barcode_white_24dp" />
 
 </android.support.design.widget.CoordinatorLayout>

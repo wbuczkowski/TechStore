@@ -13,6 +13,7 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.TextView;
@@ -29,6 +30,7 @@ public class DetailActivity extends AppActivity {
     private String mOption = "";
     private TextView mTitle;
     private ImageButton mSwitch;
+    private Button mSave;
     private EditText mWorkOrder;
     private EditText mCostCenter;
     private EditText mMaterial;
@@ -65,6 +67,13 @@ public class DetailActivity extends AppActivity {
                         mOption = OPTION_GOODS_ISSUE;
                         mTitle.setText(R.string.activity_goods_issue);
                 }
+            }
+        });
+        mSave = findViewById(R.id.button_save);
+        mSave.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                onSave();
             }
         });
 
@@ -244,42 +253,46 @@ public class DetailActivity extends AppActivity {
         // as you specify a parent activity in AndroidManifest.xml.
         switch (item.getItemId()) {
             case R.id.action_save:
-                if (validateData()) {
-                    Intent data = new Intent();
-                    data.putExtra(EXTRA_OPTION, mOption);
-                    data.putExtra(EXTRA_WORK_ORDER, mWorkOrder.getText().toString());
-                    data.putExtra(EXTRA_COST_CENTER, mCostCenter.getText().toString());
-                    data.putExtra(EXTRA_MATERIAL, mMaterial.getText().toString());
-                    data.putExtra(EXTRA_PLANT, mPlant.getText().toString());
-                    data.putExtra(EXTRA_STORAGE_LOCATION, mStorageLocation.getText().toString());
-                    data.putExtra(EXTRA_BIN, mBin.getText().toString());
-                    // TODO: manage format conversion for quantity as string
-                    data.putExtra(EXTRA_QUANTITY, mQuantity.getText().toString());
-                    SimpleDateFormat ft = new SimpleDateFormat("dd/MM/yy HH:mm:ss", Locale.US);
-                    data.putExtra(EXTRA_DATE, ft.format(new Date()));
-                    data.putExtra(EXTRA_INVENTORY, mInventory.getText().toString());
-                    data.putExtra(EXTRA_VENDOR, mVendor.getText().toString());
-                    setResult(RESULT_OK, data);
-                    // save data for next use
-                    SharedPreferences sharedPref = getPreferences(MODE_PRIVATE);
-                    SharedPreferences.Editor editor = sharedPref.edit();
-                    editor.putString(EXTRA_WORK_ORDER, mWorkOrder.getText().toString());
-                    editor.putString(EXTRA_COST_CENTER, mCostCenter.getText().toString());
-                    editor.putString(EXTRA_INVENTORY, mInventory.getText().toString());
-                    editor.putString(EXTRA_PLANT, mPlant.getText().toString());
-                    editor.putString(EXTRA_STORAGE_LOCATION, mStorageLocation.getText().toString());
-                    editor.putString(EXTRA_VENDOR, mVendor.getText().toString());
-                    editor.apply();
-                    // finish activity
-                    finish();
-                } else {
-                    Snackbar.make(findViewById(R.id.fab),
-                            R.string.save_error,
-                            Snackbar.LENGTH_LONG).show();
-                }
+                onSave();
                 return true;
         }
         return super.onOptionsItemSelected(item);
+    }
+
+    private void onSave() {
+        if (validateData()) {
+            Intent data = new Intent();
+            data.putExtra(EXTRA_OPTION, mOption);
+            data.putExtra(EXTRA_WORK_ORDER, mWorkOrder.getText().toString());
+            data.putExtra(EXTRA_COST_CENTER, mCostCenter.getText().toString());
+            data.putExtra(EXTRA_MATERIAL, mMaterial.getText().toString());
+            data.putExtra(EXTRA_PLANT, mPlant.getText().toString());
+            data.putExtra(EXTRA_STORAGE_LOCATION, mStorageLocation.getText().toString());
+            data.putExtra(EXTRA_BIN, mBin.getText().toString());
+            // TODO: manage format conversion for quantity as string
+            data.putExtra(EXTRA_QUANTITY, mQuantity.getText().toString());
+            SimpleDateFormat ft = new SimpleDateFormat("dd/MM/yy HH:mm:ss", Locale.US);
+            data.putExtra(EXTRA_DATE, ft.format(new Date()));
+            data.putExtra(EXTRA_INVENTORY, mInventory.getText().toString());
+            data.putExtra(EXTRA_VENDOR, mVendor.getText().toString());
+            setResult(RESULT_OK, data);
+            // save data for next use
+            SharedPreferences sharedPref = getPreferences(MODE_PRIVATE);
+            SharedPreferences.Editor editor = sharedPref.edit();
+            editor.putString(EXTRA_WORK_ORDER, mWorkOrder.getText().toString());
+            editor.putString(EXTRA_COST_CENTER, mCostCenter.getText().toString());
+            editor.putString(EXTRA_INVENTORY, mInventory.getText().toString());
+            editor.putString(EXTRA_PLANT, mPlant.getText().toString());
+            editor.putString(EXTRA_STORAGE_LOCATION, mStorageLocation.getText().toString());
+            editor.putString(EXTRA_VENDOR, mVendor.getText().toString());
+            editor.apply();
+            // finish activity
+            finish();
+        } else {
+            Snackbar.make(findViewById(R.id.fab),
+                    R.string.save_error,
+                    Snackbar.LENGTH_LONG).show();
+        }
     }
 
     @Override
